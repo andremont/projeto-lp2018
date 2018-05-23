@@ -9,18 +9,22 @@ O baralho francês, constituído por 52 cartas, está dividido em 4 naipes, send
 Assuma que pretendemos replicar a base do baralho, para depois podermos aplicar a qualquer jogo. Podemos basear a base nas várias propriedades classes:
 
 •	Card.java
+
   •	Existem 4 naipes: paus ♣, ouros ♦, copas ♥ e espadas ♠
   •	Cada naipe tem um número ou letra: A, 2-10 e ainda Valete-Dama-Rei; excetuando as personagens, todas as cartas têm o número de ícones do naipe equivalente ao seu número;
   •	Possui algumas operações básicas, além dos getters e setters;
 
 •	CardDeck.java
+
   •	Cada baralho tem 52 cartas, todas diferentes de todos os naipes e números
   •	Possui operações básicas, como baralhar e biscar
 
 •	CardGame.java
+
   •	Cada jogo de cartas tem um nome, um número de cartas e número de jogadores, além de um resultado final;
 
 •	Player.java
+
   •	Cada jogador tem um nome, uma palavra-passe, um número de pontos, um montante de dinheiro e uma mão de cartas CardDeck;
 
 Existem também 2 ficheiros com informação (info.json) e estatísticas (stats.json) dos jogadores .
@@ -30,27 +34,35 @@ Existem também 2 ficheiros com informação (info.json) e estatísticas (stats.
 O objetivo principal será criar uma aplicação para gerir o backoffice do jogo; existe uma parte para jogar, mas poderá ser feito o jogo ou a simulação, conforme os alunos optem. Após a modelação em UML serão feitas tarefas modulares; o desenvolvimento da estrutura de dados do jogo que contém os jogadores, cartas e estatísticas dividir-se-á em grupos:
 
 Grupo 1: implementação do módulo de gestão de jogadores
+
   	Criação da Scene para listar jogadores, pesquisar jogadores, ordenar jogadores e visualizar jogadores individualmente
 
 Grupo 2: implementação do módulo de gestão de estatísticas
+
   	Criação da Scene para listar cartas mais e menos usadas, melhores jogadores, piores jogadores
 
 Grupo 3: implementação do módulo de gestão de regras
+
   	Criação da Scene para listar regras, pesquisar regras, ordenar regras e visualizar regra individualmente
 
 Grupo 4: implementação do módulo de jogo Poker
+
   	Criação da Scene para simular o jogo; deverá ter, entre outras coisas, apostas e simulação do jogador ir jogando cartas, com outras a serem biscadas aleatoriamente
   
 Grupo 5: implementação do módulo de jogo Sueca
+
   	Criação da Scene para simular o jogo; deverá ter, entre outras coisas, pontuação atual e simulação do jogador ir jogando cartas, com outras a serem biscadas aleatoriamente;
 
 Grupo 6: implementação do módulo de jogo do Burro
+
   	Criação da Scene para simular o jogo; deverá ter, entre outras coisas, pontuação atual e simulação do jogador ir jogando cartas, com outras a serem biscadas aleatoriamente;
 
 Grupo 7: implementação do módulo de jogo do Peixinho/Famílias
+
   	Criação da Scene para simular o jogo; deverá ter, entre outras coisas, pontuação atual e simulação do jogador ir jogando cartas, com outras a serem biscadas aleatoriamente
 
 Grupo 8: implementação do módulo de jogo Solitário
+
   	Criação da Scene para simular o jogo; deverá ter, entre outras coisas, tempo e simulação do jogador ir jogando cartas, com outras a serem biscadas aleatoriamente.
 
 O código base está presente em https://github.com/andremont/projeto-lp2018. Os grupos deverão fazer checkout da versão existente e trabalhar dentro da pasta ismt.application.scene na sua tarefa específica. Podem sugerir melhoramentos à estrutura principal a qualquer momento e esperar que o docente as reveja e aceite.
