@@ -7,15 +7,19 @@ Enunciado do Projeto Final
 Os jogos de cartas de baralho francês são dos mais populares no mundo. Embora haja indícios de que os jogos de cartas teriam surgido na China juntamente com o papel, há outros que apontam uma origem árabe. De qualquer modo, o baralho foi introduzido na Europa durante o século XIV. E a partir do século XV, o desenvolvimento dos processos de impressão e de fabricação de papel propiciou a popularização do baralho em vários países. 
 O baralho francês, constituído por 52 cartas, está dividido em 4 naipes, sendo que cada naipe tem um números/letras e figura associados. Os jogos que utilizam este baralho podem usá-lo todo ou um subconjunto obtendo uma menor quantidade de cartas. 
 Assuma que pretendemos replicar a base do baralho, para depois podermos aplicar a qualquer jogo. Podemos basear a base nas várias propriedades classes:
+
 •	Card.java
 •	Existem 4 naipes: paus ♣, ouros ♦, copas ♥ e espadas ♠
 •	Cada naipe tem um número ou letra: A, 2-10 e ainda Valete-Dama-Rei; excetuando as personagens, todas as cartas têm o número de ícones do naipe equivalente ao seu número;
 •	Possui algumas operações básicas, além dos getters e setters;
+
 •	CardDeck.java
 •	Cada baralho tem 52 cartas, todas diferentes de todos os naipes e números
 •	Possui operações básicas, como baralhar e biscar
+
 •	CardGame.java
 •	Cada jogo de cartas tem um nome, um número de cartas e número de jogadores, além de um resultado final;
+
 •	Player.java
 •	Cada jogador tem um nome, uma palavra-passe, um número de pontos, um montante de dinheiro e uma mão de cartas CardDeck;
 
