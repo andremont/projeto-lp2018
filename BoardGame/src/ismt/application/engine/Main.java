@@ -2,10 +2,7 @@ package ismt.application.engine;
 
 import ismt.application.scene.*;
 import static javafx.geometry.HPos.RIGHT;
-
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,10 +10,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -33,10 +28,10 @@ public class Main extends Application {
 	final int BUTTON_SIZE = 100;
 	final int GAP_SIZE = 10;
 	final String resourceFolder = new File("resource").toURI().toString();
-	Scene sceneLogin, sceneMain, sceneMemorize, sceneBlackJack,
-		
-		  sceneViewStats, sceneViewPlayers, 
-		  sceneViewCards, sceneViewRules, sceneViewShop; 
+	Scene sceneLogin, sceneMain, 
+		  sceneMemorize, sceneBlackJack,
+		  sceneViewStats, sceneManagePlayers, sceneViewRules,
+		  sceneViewPoker,  sceneViewSueca, sceneViewBurro, sceneViewPeixinho, sceneViewSolitaire; 
 
 	public static void main(String[] args) {
 
@@ -53,12 +48,14 @@ public class Main extends Application {
 		sceneMemorize = new MemorizeScene().buildPlayScene(primaryStage, sceneMain);
 		sceneBlackJack = new BlackJackScene().buildPlayScene(primaryStage, sceneMain);
 		
-		/*
-		sceneViewStats = new StatsScene().buildStatsScene(primaryStage, sceneMain);
-		sceneViewCards = new CardsScene().buildCardsScene(primaryStage, sceneMain);
-		sceneViewPlayers = new PlayersScene().buildPlayersScene(primaryStage, sceneMain);
-		sceneViewShop = new SceneShop().buildShopScene(primaryStage, sceneMain);
-		sceneViewRules = new RulesScene().buildRulesScene(primaryStage, sceneMain);*/
+		sceneManagePlayers = new PlayersScene().buildPlayScene(primaryStage, sceneMain);
+		sceneViewStats = new StatsScene().buildPlayScene(primaryStage, sceneMain);
+		sceneViewRules = new RulesScene().buildPlayScene(primaryStage, sceneMain);
+		sceneViewPoker = new PokerScene().buildPlayScene(primaryStage, sceneMain);
+		sceneViewSueca = new SuecaScene().buildPlayScene(primaryStage, sceneMain); 
+		sceneViewBurro = new BurroScene().buildPlayScene(primaryStage, sceneMain);
+		sceneViewPeixinho = new PeixinhoScene().buildPlayScene(primaryStage, sceneMain);
+		sceneViewSolitaire = new SolitaireScene().buildPlayScene(primaryStage, sceneMain);
 		
 		// Set initial scene for login
 		primaryStage.setScene(sceneLogin);
@@ -151,27 +148,51 @@ public class Main extends Application {
 		scenetitle2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid2.add(scenetitle2, 0, 0, 2, 1);
 
-		Button buttonMemorize = new Button("Play Memorize!");
+		Button buttonMemorize = new Button("Play Memorize");
 		Button buttonBlackJack = new Button("Play Blackjack");
+		Button buttonPoker = new Button("Play Poker");
+		Button buttonBurro = new Button("Play Burro");
+		Button buttonSueca = new Button("Play Sueca");
+		Button buttonPeixinho = new Button("Play Peixinho");
+		Button buttonSolitaire = new Button("Play Solitaire");
 		Button buttonStats = new Button("View stats");
-		Button buttonPlayers = new Button("View players");
-		Button buttonCards = new Button("View cards");
+		Button buttonPlayers = new Button("Manage players");
 		Button buttonRules = new Button("View rules");
 		Button buttonLogout = new Button("Logout");
 		buttonMemorize.setMaxWidth(BUTTON_SIZE);
 		buttonBlackJack.setMaxWidth(BUTTON_SIZE);
-		buttonCards.setMaxWidth(BUTTON_SIZE);
+		buttonPoker.setMaxWidth(BUTTON_SIZE);
+		buttonBurro.setMaxWidth(BUTTON_SIZE);
+		buttonSueca.setMaxWidth(BUTTON_SIZE);
+		buttonPeixinho.setMaxWidth(BUTTON_SIZE);
+		buttonSolitaire.setMaxWidth(BUTTON_SIZE);
 		buttonStats.setMaxWidth(BUTTON_SIZE);
 		buttonPlayers.setMaxWidth(BUTTON_SIZE);
 		buttonRules.setMaxWidth(BUTTON_SIZE);
 		buttonLogout.setMaxWidth(BUTTON_SIZE);
-
+		buttonLogout.getStyleClass().add("logout");
+		
+		HBox hbBtn = new HBox(BUTTON_SIZE);
+		hbBtn.setAlignment(Pos.BASELINE_CENTER);
+		hbBtn.setSpacing(GAP_SIZE);
+		hbBtn.setPadding(new Insets(0, 20, 10, 20)); 
+		hbBtn.getChildren().addAll(buttonMemorize, buttonBlackJack, buttonPoker, buttonBurro);
+				
+		HBox hbBtn2 = new HBox(BUTTON_SIZE);
+		hbBtn2.setAlignment(Pos.BASELINE_CENTER);
+		hbBtn2.setSpacing(GAP_SIZE);
+		hbBtn2.setPadding(new Insets(0, 20, 10, 20)); 
+		hbBtn2.getChildren().addAll(buttonSueca, buttonPeixinho, buttonSolitaire);
+		
 		VBox vbBtn = new VBox(BUTTON_SIZE);
 		vbBtn.setAlignment(Pos.BASELINE_CENTER);
 		vbBtn.setSpacing(GAP_SIZE);
 		vbBtn.setPadding(new Insets(0, 20, 10, 20)); 
-		vbBtn.getChildren().addAll(buttonMemorize, buttonBlackJack, buttonPlayers, buttonCards, buttonStats, buttonRules, buttonLogout);
-		grid2.add(vbBtn, 1, 4);
+		vbBtn.getChildren().addAll(buttonPlayers,  buttonStats, buttonRules, buttonLogout);
+		
+		grid2.add(hbBtn, 1, 1);
+		grid2.add(hbBtn2, 1, 2);
+		grid2.add(vbBtn, 1, 3);
 
 		sceneMain = new Scene(grid2, APP_WIDTH, APP_HEIGHT);
 		sceneMain.getStylesheets().add(resourceFolder + "/style.css");
@@ -186,12 +207,20 @@ public class Main extends Application {
 					primaryStage.setScene(sceneMemorize);
 				else if (e.getSource() == buttonBlackJack)
 					primaryStage.setScene(sceneBlackJack);
+				else if (e.getSource() == buttonPoker)
+					primaryStage.setScene(sceneViewPoker);
+				else if (e.getSource() == buttonBurro)
+					primaryStage.setScene(sceneViewBurro);
+				else if (e.getSource() == buttonSueca)
+					primaryStage.setScene(sceneViewSueca);
+				else if (e.getSource() == buttonPeixinho)
+					primaryStage.setScene(sceneViewPeixinho);
+				else if (e.getSource() == buttonSolitaire)
+					primaryStage.setScene(sceneViewSolitaire);
 				else if (e.getSource() == buttonStats)
 					primaryStage.setScene(sceneViewStats);
 				else if (e.getSource() == buttonPlayers)
-					primaryStage.setScene(sceneViewPlayers);
-				else if (e.getSource() == buttonCards)
-					primaryStage.setScene(sceneViewCards);
+					primaryStage.setScene(sceneManagePlayers);
 				else if (e.getSource() == buttonRules)
 					primaryStage.setScene(sceneViewRules);
 				else
