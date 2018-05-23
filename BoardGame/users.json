@@ -1,0 +1,95 @@
+{
+    "root": {
+        "deck": [
+            {
+                "rank": "1",
+                "suit": "Clubs",
+                "points": "11"
+            },
+            {
+                "rank": "7",
+                "suit": "Hearts",
+                "points": "10"
+            },
+            {
+                "rank": "2",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+                "rank": "3",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+                "rank": "4",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+               "rank": "5",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+                "rank": "6",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+               "rank": "8",
+               "suit": "Clubs",
+               "points": "0"
+            }
+        ],
+        "password": "root",
+        "money": "1100",
+    },
+    
+     "admin": {
+        "deck": [
+            {
+                "rank": "1",
+                "suit": "Clubs",
+                "points": "11"
+            },
+            {
+                "rank": "7",
+                "suit": "Hearts",
+                "points": "10"
+            },
+            {
+                "rank": "2",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+                "rank": "3",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+                "rank": "4",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+               "rank": "5",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+                "rank": "6",
+                "suit": "Clubs",
+                "points": "0"
+            },
+            {
+               "rank": "8",
+               "suit": "Clubs",
+               "points": "0"
+            }
+        ],
+        "password": "pp",
+        "money": "11100"
+    }
+}
