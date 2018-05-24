@@ -172,27 +172,13 @@ public class Main extends Application {
 		buttonLogout.setMaxWidth(BUTTON_SIZE);
 		buttonLogout.getStyleClass().add("logout");
 		
-		HBox hbBtn = new HBox(BUTTON_SIZE);
-		hbBtn.setAlignment(Pos.BASELINE_CENTER);
-		hbBtn.setSpacing(GAP_SIZE);
-		hbBtn.setPadding(new Insets(0, 20, 10, 20)); 
-		hbBtn.getChildren().addAll(buttonMemorize, buttonBlackJack, buttonPoker, buttonBurro);
-				
-		HBox hbBtn2 = new HBox(BUTTON_SIZE);
-		hbBtn2.setAlignment(Pos.BASELINE_CENTER);
-		hbBtn2.setSpacing(GAP_SIZE);
-		hbBtn2.setPadding(new Insets(0, 20, 10, 20)); 
-		hbBtn2.getChildren().addAll(buttonSueca, buttonPeixinho, buttonSolitaire);
-		
 		VBox vbBtn = new VBox(BUTTON_SIZE);
 		vbBtn.setAlignment(Pos.BASELINE_CENTER);
 		vbBtn.setSpacing(GAP_SIZE);
 		vbBtn.setPadding(new Insets(0, 20, 10, 20)); 
-		vbBtn.getChildren().addAll(buttonPlayers,  buttonStats, buttonRules, buttonLogout);
-		
-		grid2.add(hbBtn, 1, 1);
-		grid2.add(hbBtn2, 1, 2);
-		grid2.add(vbBtn, 1, 3);
+		vbBtn.getChildren().addAll(buttonMemorize, buttonBlackJack, buttonPoker, buttonBurro, buttonPlayers, buttonSueca, buttonPeixinho, buttonSolitaire, buttonStats, buttonRules, buttonLogout);
+
+		grid2.add(vbBtn, 1, 1);
 
 		sceneMain = new Scene(grid2, APP_WIDTH, APP_HEIGHT);
 		sceneMain.getStylesheets().add(resourceFolder + "/style.css");
