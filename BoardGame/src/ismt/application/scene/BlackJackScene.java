@@ -31,9 +31,9 @@ import javafx.stage.Stage;
 public class BlackJackScene extends CardGame {
 
 	private int acesPlayer = 0, acesDealer = 0;
-	private SimpleIntegerProperty pointsPlayer = new SimpleIntegerProperty(0), pointsDealer = new SimpleIntegerProperty(0);
+	public SimpleIntegerProperty pointsPlayer = new SimpleIntegerProperty(0), pointsDealer = new SimpleIntegerProperty(0);
 	private SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
-	private ObservableList<Node> dealerHand, playerHand;
+	public ObservableList<Node> dealerHand, playerHand;
 	private Text message = new Text();
 	private HBox dealerCards = new HBox(20);
 	private HBox playerCards = new HBox(20);
@@ -153,7 +153,7 @@ public class BlackJackScene extends CardGame {
 		return root;
 	}
 
-	private void startNewGame() {
+	public boolean startNewGame() {
 		playable.set(true);
 		message.setText("New game started");
 
@@ -171,9 +171,11 @@ public class BlackJackScene extends CardGame {
 		takeCard(acesDealer,card_deck.draw_card(),dealerHand, pointsDealer);
 		takeCard(acesPlayer,card_deck.draw_card(),playerHand, pointsPlayer);
 		takeCard(acesPlayer,card_deck.draw_card(),playerHand, pointsPlayer);
+		
+		return true;
 	}
 
-	private void endGame() {
+	public boolean endGame() {
 		playable.set(false);
 
 		int dealerValue = pointsDealer.get();
@@ -188,9 +190,11 @@ public class BlackJackScene extends CardGame {
 			winner = "PLAYER";
 		}
 		message.setText(winner + " WON");
+		
+		return true;
 	}
 
-	public void takeCard(int aces, Card card, ObservableList<Node> cardHand, SimpleIntegerProperty value) {
+	public boolean takeCard(int aces, Card card, ObservableList<Node> cardHand, SimpleIntegerProperty value) {
 		
 		cardHand.add(card.generateCardImage());
 		
@@ -205,6 +209,8 @@ public class BlackJackScene extends CardGame {
 		} else {
 			value.set(value.get() + card.getRank());
 		}
+		
+		return true;
 	}
 
 }
