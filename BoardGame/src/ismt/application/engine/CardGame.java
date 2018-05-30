@@ -12,8 +12,10 @@ public abstract class CardGame {
 	int numberOfPlayers;
 	protected final String resourceFolder = new File("resource").toURI().toString();
 	public CardDeck card_deck;
-	
+
 	public abstract void deal();
 	public abstract void shuffle();
-	//public abstract void simulateGame();
+	public abstract boolean startNewGame();
+	public abstract boolean endGame();
+	public abstract void simulateGame();
 }

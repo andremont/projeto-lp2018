@@ -143,5 +143,23 @@ public class MemorizeScene extends CardGame{
 		deal();
 	}
 
+	@Override
+	public boolean startNewGame() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean endGame() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void simulateGame() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

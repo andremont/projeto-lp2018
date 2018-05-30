@@ -3,16 +3,15 @@ package ismt.application.scene;
 import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
 import ismt.application.engine.CardGame;
-import ismt.application.engine.Player;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,10 +32,9 @@ public class BlackJackScene extends CardGame {
 	private int acesPlayer = 0, acesDealer = 0;
 	public SimpleIntegerProperty pointsPlayer = new SimpleIntegerProperty(0), pointsDealer = new SimpleIntegerProperty(0);
 	private SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
-	public ObservableList<Node> dealerHand, playerHand;
+	public ObservableList<Node> dealerHand = FXCollections.observableArrayList(), playerHand = FXCollections.observableArrayList();
 	private Text message = new Text();
-	private HBox dealerCards = new HBox(20);
-	private HBox playerCards = new HBox(20);
+	private HBox dealerCards = new HBox(20),  playerCards = new HBox(20);
 	
 	public Scene buildPlayScene(Stage primaryStage, Scene sceneMain) {
 
@@ -152,7 +150,8 @@ public class BlackJackScene extends CardGame {
 		
 		return root;
 	}
-
+	
+	@Override
 	public boolean startNewGame() {
 		playable.set(true);
 		message.setText("New game started");
@@ -160,10 +159,13 @@ public class BlackJackScene extends CardGame {
 		card_deck = new CardDeck();
 		card_deck.shuffle();
 		
-		dealerHand.clear();
+		if (dealerHand != null)
+			dealerHand.clear();
 		acesDealer = 0;
 		pointsDealer.set(0);
-		playerHand.clear();
+		
+		if (dealerHand != null)
+			playerHand.clear();
 		acesPlayer = 0;
 		pointsPlayer.set(0);
 
@@ -174,7 +176,8 @@ public class BlackJackScene extends CardGame {
 		
 		return true;
 	}
-
+	
+	@Override
 	public boolean endGame() {
 		playable.set(false);
 
@@ -211,6 +214,12 @@ public class BlackJackScene extends CardGame {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public void simulateGame() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
