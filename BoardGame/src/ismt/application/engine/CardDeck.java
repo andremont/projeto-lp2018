@@ -2,7 +2,6 @@ package ismt.application.engine;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -12,7 +11,7 @@ public class CardDeck {
 	ArrayList<Card> cards_in_this_deck = new ArrayList<Card>();
 
 	public CardDeck() {
-		for (int suit_index = 0; suit_index < Suit.values().length; suit_index++) {
+		for (int suit_index = 0; suit_index < 4; suit_index++) {
 			for (int card_rank = 1; card_rank < 14; card_rank++) {
 				add_card(new Card(card_rank, Suit.values()[suit_index]));
 			}
@@ -20,7 +19,7 @@ public class CardDeck {
 	}
 	
 	public ObservableList<Node> get_images() {
-		ObservableList<Node> cards = FXCollections.observableArrayList();;
+		ObservableList<Node> cards = FXCollections.observableArrayList();
 		cards.clear();
 		
 		for(Card myCard : cards_in_this_deck)

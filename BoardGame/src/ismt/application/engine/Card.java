@@ -1,5 +1,9 @@
 package ismt.application.engine;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -10,10 +14,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Card extends ImageView {
-	int cardRank, cardPoints;
-	Suit cardSuit;
-	Image card_faceup_image;
-
+	public int cardRank, cardPoints;
+	public Suit cardSuit;
+	public Image card_faceup_image;
+	protected final String resourceFolder = new File("resource/playing_cards_images").toURI().toString();
+	
 	// face-up = card suit and rank are visible
 	// face-down = card suit and rank are not visible
 	// boolean this_card_is_face_up = false ;
@@ -21,7 +26,29 @@ public class Card extends ImageView {
 	public static final int CARD_WIDTH = 150;
 	public static final int CARD_HEIGHT = 215;
 
-	public Card(){}
+	public Card(){
+		cardRank = 0;
+		cardSuit = Suit.values()[new Random().nextInt(4)];
+		cardPoints = 0;
+	}
+	
+	public Card(int given_card_rank, String given_card_suit) {
+		cardRank = given_card_rank;
+		cardSuit = Suit.valueOf(given_card_suit);
+		cardPoints = 0;
+		// A reference to an Image object will be retrieved by using
+		// a string as a key. For example, with the string "spades1" the
+		// image of the Ace of Spades is found.
+		ImageStore.card_face_images = new HashMap<String, Image>();
+		Image temp = ImageStore.card_face_images.get(given_card_suit + cardRank);
+		
+		if (temp != null)
+			card_faceup_image = temp;
+		else
+			card_faceup_image = ImageStore.card_back_image;
+		
+		setImage(ImageStore.card_back_image); // Initially the card is face-down
+	}
 	
 	public Card(int given_card_rank, Suit given_card_suit) {
 		cardRank = given_card_rank;
@@ -30,7 +57,12 @@ public class Card extends ImageView {
 		// A reference to an Image object will be retrieved by using
 		// a string as a key. For example, with the string "spades1" the
 		// image of the Ace of Spades is found.
-		card_faceup_image = ImageStore.card_face_images.get(cardSuit.toString() + cardRank);
+		Image temp = ImageStore.card_face_images.get(cardSuit.toString() + cardRank);
+		
+		if (temp != null)
+			card_faceup_image = temp;
+		else
+			card_faceup_image = ImageStore.card_back_image;
 		
 		setImage(ImageStore.card_back_image); // Initially the card is face-down
 	}
@@ -167,12 +199,15 @@ public class Card extends ImageView {
         text2.setX(10);
         text2.setY(CARD_HEIGHT - 10);
 
-        ImageView view = new ImageView(cardSuit.image);
+        String cardFile = resourceFolder + "/" + cardSuit.name()  + ".png";
+        Image cardSuitImage = new Image(cardFile, 32, 32, true, true);
+        ImageView view = new ImageView(cardSuitImage);
+        
         view.setRotate(180);
         view.setX(CARD_WIDTH - 32);
         view.setY(CARD_HEIGHT - 32);
         Group main_group_for_cards = new Group();
-        main_group_for_cards.getChildren().addAll(bg, new ImageView(cardSuit.image), view, text1, text2);
+        main_group_for_cards.getChildren().addAll(bg, new ImageView(cardSuitImage), view, text1, text2);
         
         return main_group_for_cards;
     }
