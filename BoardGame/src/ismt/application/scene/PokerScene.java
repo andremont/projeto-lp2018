@@ -2,18 +2,12 @@ package ismt.application.scene;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
-import java.util.HashMap;
 import java.util.Random;
-
 import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
 import ismt.application.engine.CardGame;
-import ismt.application.engine.ImageStore;
-import ismt.application.engine.Suit;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -34,15 +29,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class PokerScene extends CardGame {
-	
+
 	final String imageFolder = resourceFolder + "/playing_cards_images/";
 	private SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
 	private Text message = new Text();
 
-	private ObservableList<Node> playerHand, player2Hand, player3Hand, player4Hand, floopCards, turnCards, riverCards, burnCard;
+	private ObservableList<Node> playerHand, player2Hand, player3Hand, player4Hand, floopCards, turnCards, riverCards,
+			burnCard;
 
+	private HBox graveyard = new HBox(5);
 	private HBox player = new HBox(5);
-	
 	private VBox player2 = new VBox(5);
 	private HBox player3 = new HBox(5);
 	private VBox player4 = new VBox(5);
@@ -50,22 +46,32 @@ public class PokerScene extends CardGame {
 	private HBox turn = new HBox(5);
 	private HBox river = new HBox(5);
 
+	private int myMoney = 500;
+	private int money2 = 500;
+	private int money3 = 500;
+	private int money4 = 500;
+	private int pocket = 0;
+	private int big = 10;
+	private int small = big / 2;
+
+	private String cash;
+	private String cash2;
+	private String cash3;
+	private String cash4;
+	private String pocketCash;
+
+	private Text moneyText = new Text();
+	private Text money2Text = new Text();
+	private Text money3Text = new Text();
+	private Text money4Text = new Text();
+	private Text pocketMoney = new Text();
+	
+	
+
 	private int dealer = 0;
+	private int gameState = 1;
 
 	public Scene buildPlayScene(Stage primaryStage, Scene sceneMain) {
-		
-		ImageStore.card_back_image = new Image(imageFolder + "card_back.png");
-		ImageStore.card_face_images = new HashMap<String, Image>();
-		
-		for (int suit_index = 0; suit_index < Suit.values().length; suit_index++) {
-			for (int card_rank = 1; card_rank < 14; card_rank++) {
-				String image_file_name = imageFolder + Suit.values()[suit_index] + card_rank + ".png";
-				Image card_faceup_image = new Image(image_file_name);
-				String key_for_image = Suit.values()[suit_index].toString() + card_rank;
-				ImageStore.card_face_images.put(key_for_image, card_faceup_image);
-			}
-		}
-		card_deck = new CardDeck();
 
 		EventHandler<ActionEvent> buttonBackhandler = new EventHandler<ActionEvent>() {
 			@Override
@@ -79,6 +85,8 @@ public class PokerScene extends CardGame {
 	}
 
 	private Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
+		
+		setnewText();
 
 		playerHand = player.getChildren();
 		player2Hand = player2.getChildren();
@@ -87,6 +95,8 @@ public class PokerScene extends CardGame {
 		floopCards = flop.getChildren();
 		turnCards = turn.getChildren();
 		riverCards = river.getChildren();
+		burnCard = graveyard.getChildren();
+		
 
 		Pane root = new Pane();
 		root.setPrefSize(1415, 770);
@@ -109,117 +119,227 @@ public class PokerScene extends CardGame {
 		// LEFT
 		HBox mainBox = new HBox(25);
 		VBox leftVBox = new VBox(50);
-		HBox table = new HBox (20);
+		HBox table = new HBox(20);
 		mainBox.setAlignment(Pos.CENTER);
 		player.setAlignment(Pos.CENTER);
 		player2.setAlignment(Pos.CENTER);
 		player3.setAlignment(Pos.CENTER);
 		player4.setAlignment(Pos.CENTER);
 		leftVBox.setAlignment(Pos.CENTER);
-		//Text dealerScore = new Text("Dealer: ");
-		//Text playerScore = new Text("Player: ");
-		table.getChildren().addAll( flop, turn, river);
-		leftVBox.getChildren().addAll( player3, table, player);
+		// Text dealerScore = new Text("Dealer: ");
+		// Text playerScore = new Text("Player: ");
+		table.getChildren().addAll(flop, turn, river);
+		leftVBox.getChildren().addAll(player3, table, player);
 		mainBox.getChildren().addAll(player2, leftVBox, player4);
+		flop.setVisible(false);
+		turn.setVisible(false);
+		river.setVisible(false);
 
 		// RIGHT
-		VBox rightVBox = new VBox();
+		VBox rightVBox = new VBox(10);
 		rightVBox.setAlignment(Pos.CENTER);
-
-		final TextField bet = new TextField("Bet");
-		bet.setDisable(true);
-		bet.setMaxWidth(50);
-		Text money = new Text("Money");
+		HBox moneyBox = new HBox(5);
+		moneyBox.setAlignment(Pos.CENTER);
 
 		Button btnPlay = new Button("Play");
-		Button btnHit = new Button("Hit");
-		Button btnStand = new Button("Stand");
 		Button buttonBack = new Button("Back");
-		
-		HBox buttonsHBox = new HBox(15, btnHit, btnStand, buttonBack);
-		buttonsHBox.setAlignment(Pos.CENTER);
-		rightVBox.getChildren().addAll(bet, btnPlay, money, buttonsHBox);
+		Button btnEnd = new Button("End");
+
+		Button btnCheck = new Button("Check");
+		Button btnCall = new Button("Call");
+		Button btnRaise = new Button("Raise");
+		Button btnFold = new Button("Fold");
+
+		HBox btnActionsHBox = new HBox(2, btnCheck, btnCall, btnRaise, btnFold);
+		HBox btnOptionsHBox = new HBox(btnPlay, btnEnd, buttonBack);
+		moneyBox.getChildren().addAll(moneyText);
+		btnActionsHBox.setAlignment(Pos.CENTER);
+		btnOptionsHBox.setAlignment(Pos.CENTER);
+		rightVBox.getChildren().addAll(btnOptionsHBox, moneyText, money2Text, money3Text, money4Text, btnActionsHBox,
+				pocketMoney);
 
 		// ADD BOTH STACKS TO ROOT LAYOUT
-		
-		
+
 		rootLayout.getChildren().addAll(new StackPane(leftBG, mainBox), new StackPane(rightBG, rightVBox));
 		root.getChildren().addAll(background, rootLayout);
 
 		// BIND PROPERTIES
 		btnPlay.disableProperty().bind(playable);
-		btnHit.disableProperty().bind(playable.not());
-		btnStand.disableProperty().bind(playable.not());
-
-		
-        
-       
-
-       
+		btnEnd.disableProperty().bind(playable.not());
+		btnCheck.disableProperty().bind(playable.not());
+		btnCall.disableProperty().bind(playable.not());
+		btnRaise.disableProperty().bind(playable.not());
+		btnFold.disableProperty().bind(playable.not());
 
 		// INIT BUTTONS
 		btnPlay.setOnAction(event -> {
 			startNewGame();
 		});
-
-		btnHit.setOnAction(event -> {
-			
-		});
-
-		btnStand.setOnAction(event -> {
-			
-			
+		btnEnd.setOnAction(event -> {
+			playable.set(false);
 			endGame();
 		});
+
+		btnCheck.setOnAction(event -> {
+			check();
+
+		});
+
+		btnCall.setOnAction(event -> {
+			call();
+
+		});
+
+		btnRaise.setOnAction(event -> {
+			raise();
+
+		});
+
+		btnFold.setOnAction(event -> {
+			fold();
+
+		});
 		buttonBack.setOnAction(buttonBackhandler);
-		
+
 		return root;
-	
+
 	}
 
-	private void startNewGame() {
+	private void move() {
 
-		playable.set(true);
-		message.setText("New game started");
+		// TODO Auto-generated method stub
+		switch (gameState) {
 
-		
-		card_deck.shuffle();
+		case 1:
+			gameState++;
+			break;
 
-		playerHand.clear();
-		player2Hand.clear();
-		player3Hand.clear();
-		player4Hand.clear();
-		floopCards.clear();
-		//burnCard.clear();
+		case 2:
+			flop.setVisible(true);
+			gameState++;
+			break;
+		case 3:
+			turn.setVisible(true);
+			gameState++;
+			break;
+		case 4:
+			river.setVisible(true);
+			gameState++;
 
-		setDealer();
+			break;
 
-		for (int i = 0; i < 2; i++) {
-			takeCard(card_deck.draw_card(), playerHand, true);
-			takeCard(card_deck.draw_card(), player2Hand, false);
-			takeCard(card_deck.draw_card(), player3Hand, false);
-			takeCard(card_deck.draw_card(), player4Hand, false);
 		}
 
-		//takeCard(card_deck.draw_card(), burnCard);
+	}
 
-		for (int i = 0; i < 3; i++) {
-			takeCard(card_deck.draw_card(), floopCards, false);
-		}
+	private void fold() {
+		// TODO Auto-generated method stub
+		player.setVisible(false);
+		move();
+
+	}
+
+	private void raise() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void call() {
 		
-		takeCard(card_deck.draw_card(), turnCards, false);
-		takeCard(card_deck.draw_card(), riverCards, false);
+		if (dealer!= 3){
+			if (dealer == 4 ) {
+				myMoney = myMoney - small;
+				pocket = pocket + small;
+				System.out.println("pocket: " + pocket);
+			}else {
+				myMoney = myMoney - big;
+				pocket = pocket + big;
+				System.out.println("pocket: " + pocket);
+			}			
+		}
+		setnewText();
+	}
+
+	private void check() {
+		move();
 
 	}
 
 	private void setDealer() {
 
-		Random random = new Random();
-		dealer = random.nextInt(4) + 1;
+		Image dealerImage = new Image(resourceFolder + "Dealer.png", 50, 50, true, true);
+		Image smallImage = new Image(resourceFolder + "Small.png", 50, 50, true, true);
+		Image bigImage = new Image(resourceFolder + "Big.png", 50, 50, true, true);
+		ImageView viewDealer = new ImageView(dealerImage);
+		ImageView viewSmall = new ImageView(smallImage);
+		ImageView viewBig = new ImageView(bigImage);
+
+		if (dealer == 0) {
+			Random random = new Random();
+			dealer = random.nextInt(4) + 1;
+		} else {
+			dealer++;
+			if (dealer == 5)
+				dealer = 1;
+		}
+
+		switch (dealer) {
+		case 1:
+			playerHand.add(viewDealer);
+			player2Hand.add(viewSmall);
+			player3Hand.add(viewBig);
+
+			money2 = money2 - small;
+			money3 = money3 - big;
+			pocket = small + big;
+			
+			setnewText();
+			break;
+		case 2:
+			player2Hand.add(viewDealer);
+			player3Hand.add(viewSmall);
+			player4Hand.add(viewBig);
+			
+			money3 = money3 - small;
+			money4 = money4 - big;
+			pocket = small + big;
+			break;
+		case 3:
+			player3Hand.add(viewDealer);
+			player4Hand.add(viewSmall);
+			playerHand.add(viewBig);
+			
+			money4 = money4 - small;
+			myMoney = myMoney - big;
+			pocket = small + big;
+			break;
+		case 4:
+			player4Hand.add(viewDealer);
+			playerHand.add(viewSmall);
+			player2Hand.add(viewBig);
+			
+			myMoney = myMoney - small;
+			money2 = money2 - big;
+			pocket = small + big;
+			break;
+		}
+
 	}
 
-	private void endGame() {
-
+	private void setnewText() {
+		cash = Integer.toString(myMoney);
+		cash2 = Integer.toString(money2);
+		cash3 = Integer.toString(money3);
+		cash4 = Integer.toString(money4);
+		pocketCash = Integer.toString(pocket);
+				
+		moneyText.setText(" My money: " + cash + "€");
+		money2Text.setText("Player 2: " + cash2 + "€");
+		money3Text.setText("Player 3: " + cash3 + "€");
+		money4Text.setText("Player 4: " + cash4 + "€");
+		pocketMoney.setText("Pocket: " + pocketCash + "€");
+		
+		
 	}
 
 	public void takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
@@ -237,6 +357,73 @@ public class PokerScene extends CardGame {
 
 	@Override
 	public void shuffle() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean startNewGame() {
+		setnewText();
+				
+		card_deck = new CardDeck();
+
+		playable.set(true);
+		message.setText("New game started");
+
+		card_deck.shuffle();
+
+		playerHand.clear();
+		player2Hand.clear();
+		player3Hand.clear();
+		player4Hand.clear();
+		floopCards.clear();
+		burnCard.clear();
+
+		setDealer();
+
+		for (int i = 0; i < 2; i++) {
+			takeCard(card_deck.draw_card(), playerHand, true);
+			takeCard(card_deck.draw_card(), player2Hand, false);
+			takeCard(card_deck.draw_card(), player3Hand, false);
+			takeCard(card_deck.draw_card(), player4Hand, false);
+		}
+
+		takeCard(card_deck.draw_card(), burnCard, false);
+
+		for (int i = 0; i < 3; i++) {
+			takeCard(card_deck.draw_card(), floopCards, true);
+		}
+		takeCard(card_deck.draw_card(), burnCard, false);
+		takeCard(card_deck.draw_card(), turnCards, true);
+		takeCard(card_deck.draw_card(), burnCard, false);
+		takeCard(card_deck.draw_card(), riverCards, true);
+		
+		System.out.println("myMoney: " + myMoney);
+		System.out.println("money2: " + money2);
+		System.out.println("money3: " + money3);
+		System.out.println("money4: " + money4);
+		System.out.println("pocket: " + pocket);
+		System.out.println();
+		
+		setnewText();
+		return false;
+	}
+
+	@Override
+	public boolean endGame() {
+		playerHand.clear();
+		player2Hand.clear();
+		player3Hand.clear();
+		player4Hand.clear();
+		floopCards.clear();
+		turnCards.clear();
+		riverCards.clear();
+		burnCard.clear();
+		return false;
+	}
+
+	@Override
+	public void simulateGame() {
 		// TODO Auto-generated method stub
 
 	}
