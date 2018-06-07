@@ -7,6 +7,8 @@ import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
 import ismt.application.engine.CardGame;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +17,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +29,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -54,6 +60,9 @@ public class PokerScene extends CardGame {
 	private int big = 10;
 	private int small = big / 2;
 
+	final Slider slide = new Slider();
+	final Label slideValue = new Label("Raise Value: ");
+
 	private String cash;
 	private String cash2;
 	private String cash3;
@@ -65,8 +74,6 @@ public class PokerScene extends CardGame {
 	private Text money3Text = new Text();
 	private Text money4Text = new Text();
 	private Text pocketMoney = new Text();
-	
-	
 
 	private int dealer = 0;
 	private int gameState = 1;
@@ -85,8 +92,8 @@ public class PokerScene extends CardGame {
 	}
 
 	private Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
-		
-		setnewText();
+
+		setNewText();
 
 		playerHand = player.getChildren();
 		player2Hand = player2.getChildren();
@@ -96,7 +103,6 @@ public class PokerScene extends CardGame {
 		turnCards = turn.getChildren();
 		riverCards = river.getChildren();
 		burnCard = graveyard.getChildren();
-		
 
 		Pane root = new Pane();
 		root.setPrefSize(1415, 770);
@@ -150,13 +156,15 @@ public class PokerScene extends CardGame {
 		Button btnRaise = new Button("Raise");
 		Button btnFold = new Button("Fold");
 
+		pocketMoney.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+
 		HBox btnActionsHBox = new HBox(2, btnCheck, btnCall, btnRaise, btnFold);
 		HBox btnOptionsHBox = new HBox(btnPlay, btnEnd, buttonBack);
 		moneyBox.getChildren().addAll(moneyText);
 		btnActionsHBox.setAlignment(Pos.CENTER);
 		btnOptionsHBox.setAlignment(Pos.CENTER);
-		rightVBox.getChildren().addAll(btnOptionsHBox, moneyText, money2Text, money3Text, money4Text, btnActionsHBox,
-				pocketMoney);
+		rightVBox.getChildren().addAll(btnOptionsHBox, moneyText, money2Text, money3Text, money4Text, pocketMoney,
+				btnActionsHBox, slide, slideValue);
 
 		// ADD BOTH STACKS TO ROOT LAYOUT
 
@@ -240,24 +248,27 @@ public class PokerScene extends CardGame {
 	}
 
 	private void raise() {
-		// TODO Auto-generated method stub
-
+		double y = slide.getValue();
+		int x = (int) y;
+		myMoney = myMoney - x;
+		pocket = pocket + x;
+		setNewText();
+		move();
 	}
 
 	private void call() {
-		
-		if (dealer!= 3){
-			if (dealer == 4 ) {
+
+		if (dealer != 3) {
+			if (dealer == 4) {
 				myMoney = myMoney - small;
 				pocket = pocket + small;
-				System.out.println("pocket: " + pocket);
-			}else {
+			} else {
 				myMoney = myMoney - big;
 				pocket = pocket + big;
-				System.out.println("pocket: " + pocket);
-			}			
+			}
 		}
-		setnewText();
+		setNewText();
+		move();
 	}
 
 	private void check() {
@@ -292,14 +303,14 @@ public class PokerScene extends CardGame {
 			money2 = money2 - small;
 			money3 = money3 - big;
 			pocket = small + big;
-			
-			setnewText();
+
+			setNewText();
 			break;
 		case 2:
 			player2Hand.add(viewDealer);
 			player3Hand.add(viewSmall);
 			player4Hand.add(viewBig);
-			
+
 			money3 = money3 - small;
 			money4 = money4 - big;
 			pocket = small + big;
@@ -308,7 +319,7 @@ public class PokerScene extends CardGame {
 			player3Hand.add(viewDealer);
 			player4Hand.add(viewSmall);
 			playerHand.add(viewBig);
-			
+
 			money4 = money4 - small;
 			myMoney = myMoney - big;
 			pocket = small + big;
@@ -317,7 +328,7 @@ public class PokerScene extends CardGame {
 			player4Hand.add(viewDealer);
 			playerHand.add(viewSmall);
 			player2Hand.add(viewBig);
-			
+
 			myMoney = myMoney - small;
 			money2 = money2 - big;
 			pocket = small + big;
@@ -326,20 +337,60 @@ public class PokerScene extends CardGame {
 
 	}
 
-	private void setnewText() {
+	private void setNewText() {
 		cash = Integer.toString(myMoney);
 		cash2 = Integer.toString(money2);
 		cash3 = Integer.toString(money3);
 		cash4 = Integer.toString(money4);
 		pocketCash = Integer.toString(pocket);
-				
+
 		moneyText.setText(" My money: " + cash + "€");
 		money2Text.setText("Player 2: " + cash2 + "€");
 		money3Text.setText("Player 3: " + cash3 + "€");
 		money4Text.setText("Player 4: " + cash4 + "€");
 		pocketMoney.setText("Pocket: " + pocketCash + "€");
 		
+		if (myMoney != 0) {
+			
+		slide.setMin(1);
+		slide.setMax(myMoney);
+		slide.setValue(1);
+		slide.setShowTickLabels(true);
+		slide.setMajorTickUnit(myMoney / 2);
+		slide.setMinorTickCount(myMoney / 20);
 		
+			switch (dealer) {
+			case 3:
+				slideValue.setText("Raise Value: " + big);
+				slide.setMin(big);
+				break;
+			case 4:
+				slideValue.setText("Raise Value: " + small);
+				slide.setMin(small);
+				break;
+			}
+
+			slide.valueProperty().addListener(new ChangeListener<Number>() {
+				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+
+					int x = new_val.intValue();
+
+					slideValue.setText("Raise Value: " + Integer.toString(x));
+					slideValue.setFont(Font.font("Verdana", FontWeight.NORMAL, 16));
+
+					if (x == myMoney) {
+						Text text = new Text("ALL IN!");
+						text.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+						slideValue.setText("ALL IN!");
+						slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+					}
+
+				}
+			});
+		} else {
+			slide.setDisable(true);
+		}
+
 	}
 
 	public void takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
@@ -363,8 +414,9 @@ public class PokerScene extends CardGame {
 
 	@Override
 	public boolean startNewGame() {
-		setnewText();
-				
+
+		setNewText();
+
 		card_deck = new CardDeck();
 
 		playable.set(true);
@@ -397,15 +449,15 @@ public class PokerScene extends CardGame {
 		takeCard(card_deck.draw_card(), turnCards, true);
 		takeCard(card_deck.draw_card(), burnCard, false);
 		takeCard(card_deck.draw_card(), riverCards, true);
-		
+
 		System.out.println("myMoney: " + myMoney);
 		System.out.println("money2: " + money2);
 		System.out.println("money3: " + money3);
 		System.out.println("money4: " + money4);
 		System.out.println("pocket: " + pocket);
 		System.out.println();
-		
-		setnewText();
+
+		setNewText();
 		return false;
 	}
 
