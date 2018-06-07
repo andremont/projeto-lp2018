@@ -19,8 +19,9 @@ public class BlackJackSceneTest extends TestCase {
 
 	@Before
 	protected void setUp() {
-		myAppMock = new MainMock();
+		
 		myBlackJack = new BlackJackScene();
+		myAppMock = new MainMock(myBlackJack);
 		myBlackJack.card_deck = new CardDeck();
 		expected = myBlackJack.card_deck;
 		createAppMock();
