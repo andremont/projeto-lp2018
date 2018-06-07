@@ -2,7 +2,7 @@ package ismt.application.tests;
 
 import java.io.File;
 
-import ismt.application.scene.BlackJackScene;
+import ismt.application.engine.CardGame;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -14,10 +14,14 @@ public class MainMock extends Application {
 	final int BUTTON_SIZE = 100;
 	final int GAP_SIZE = 10;
 	final String resourceFolder = new File("resource").toURI().toString();
-	Scene sceneMain; 
+	Scene sceneMain;
+	CardGame game;
 
+	public MainMock(CardGame myGame){
+		this.game = myGame;
+	}
+	
 	public static void main(String[] args) {
-
 		launch(args);
 	}
 	
@@ -25,7 +29,7 @@ public class MainMock extends Application {
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("LP Card Games");
 		// Set initial scene for login
-		sceneMain = new BlackJackScene().buildPlayScene(primaryStage, sceneMain);
+		sceneMain = game.buildPlayScene(primaryStage, sceneMain);
 		primaryStage.setScene(sceneMain);
 		
 		// Show application!
