@@ -6,6 +6,7 @@ import java.util.Random;
 import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
 import ismt.application.engine.CardGame;
+import ismt.application.engine.Player;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,8 +41,15 @@ public class PokerScene extends CardGame {
 	private SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
 	private Text message = new Text();
 
-	private ObservableList<Node> playerHand, player2Hand, player3Hand, player4Hand, floopCards, turnCards, riverCards,
-			burnCard;
+	public ObservableList<Node> playerHand;
+	private ObservableList<Node> player2Hand;
+	private ObservableList<Node> player3Hand;
+	private ObservableList<Node> player4Hand;
+	private ObservableList<Node> floopCards;
+	private ObservableList<Node> turnCards;
+	private ObservableList<Node> riverCards;
+	private ObservableList<Node> burnCard;
+	Player man = new Player();
 
 	private HBox graveyard = new HBox(5);
 	private HBox player = new HBox(5);
@@ -74,7 +82,7 @@ public class PokerScene extends CardGame {
 	private Text money3Text = new Text();
 	private Text money4Text = new Text();
 	private Text pocketMoney = new Text();
-	
+
 	private Button btnPlay = new Button("Play");
 	private Button buttonBack = new Button("Back");
 	private Button btnEnd = new Button("End");
@@ -155,8 +163,6 @@ public class PokerScene extends CardGame {
 		rightVBox.setAlignment(Pos.CENTER);
 		HBox moneyBox = new HBox(5);
 		moneyBox.setAlignment(Pos.CENTER);
-
-		
 
 		pocketMoney.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
 
@@ -241,39 +247,43 @@ public class PokerScene extends CardGame {
 					Card test = (Card) player2Hand.get(i);
 					test.turn_card();
 				}
-			}else {
+			} else {
 				for (int i = 0; i < 2; i++) {
 					Card test = (Card) player2Hand.get(i);
 					test.turn_card();
-					}
 				}
+			}
 			if (player3Hand.size() == 3) {
 				for (int i = 1; i < 3; i++) {
 					Card test = (Card) player3Hand.get(i);
 					test.turn_card();
 				}
-			}else {
+			} else {
 				for (int i = 0; i < 2; i++) {
 					Card test = (Card) player3Hand.get(i);
-					test.turn_card();}}
+					test.turn_card();
+				}
+			}
 			if (player4Hand.size() == 3) {
 				for (int i = 1; i < 3; i++) {
 					Card test = (Card) player4Hand.get(i);
 					test.turn_card();
 				}
-			}else {
+			} else {
 				for (int i = 0; i < 2; i++) {
 					Card test = (Card) player4Hand.get(i);
-					test.turn_card();}}
+					test.turn_card();
+				}
+			}
 			btnCheck.setVisible(false);
 			btnCall.setVisible(false);
 			btnRaise.setVisible(false);
 			btnFold.setVisible(false);
-			slide.setVisible(false);	
-			
+			slide.setVisible(false);
+
 			slideValue.setText("YOU WON!!");
 			slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
-			
+
 			break;
 
 		}
@@ -287,7 +297,6 @@ public class PokerScene extends CardGame {
 		btnFold.setVisible(false);
 		slide.setVisible(false);
 		move();
-		
 
 	}
 
@@ -435,32 +444,34 @@ public class PokerScene extends CardGame {
 
 	}
 
-	public void takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
+	public boolean takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
 		if (up) {
 			card.turn_card();
 		}
 		cardHand.add(card);
+		
+		return true;
 	}
 
 	@Override
 	public void deal() {
-		// TODO Auto-generated method stub
+		card_deck = new CardDeck();
 
 	}
 
 	@Override
 	public void shuffle() {
-		// TODO Auto-generated method stub
+		card_deck.shuffle();
+		deal();
 
 	}
 
 	@Override
 	public boolean startNewGame() {
-		
 
 		setNewText();
 
-		card_deck = new CardDeck();
+		deal();
 
 		playable.set(true);
 		message.setText("New game started");
@@ -515,8 +526,7 @@ public class PokerScene extends CardGame {
 		btnFold.setVisible(true);
 		slide.setVisible(true);
 		btnCheck.setVisible(true);
-		
-		
+
 		gameState = 1;
 		playerHand.clear();
 		player2Hand.clear();
@@ -526,9 +536,7 @@ public class PokerScene extends CardGame {
 		turnCards.clear();
 		riverCards.clear();
 		burnCard.clear();
-		
-		
-		
+
 		return false;
 	}
 
