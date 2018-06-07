@@ -64,6 +64,12 @@ public class PokerSceneTest extends TestCase{
 	}
 	
 	@Test
+	public void testDeal() {
+		CardDeck result = new CardDeck();
+		assertTrue(!expected.equals(result));
+	}
+	
+	@Test
 	public void testShuffle() {
 		myPoker.shuffle();
 		CardDeck result = myPoker.card_deck;
@@ -90,14 +96,31 @@ public class PokerSceneTest extends TestCase{
 		boolean result = myPoker.takeCard(myPoker.card_deck.draw_card(), myPoker.playerHand, true);
 		assertEquals(expected, result);
 	}
-
+	
+	@Test
+	public void testSetDealer() {
+		boolean expected = true;
+		boolean result = myPoker.setDealer();
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testSetNewText() {
+		boolean expected = true;
+		boolean result = myPoker.setNewText();
+		assertEquals(expected, result);
+	}
+	
+	
 	public static junit.framework.Test suite() {
 		TestSuite suite = new TestSuite();
-		suite.addTest(new PokerSceneTest("testDeal")); 
-		suite.addTest(new PokerSceneTest("testShuffle"));
-		suite.addTest(new PokerSceneTest("testStartGame"));
-		suite.addTest(new PokerSceneTest("testEndGame"));
-		suite.addTest(new PokerSceneTest("testTakeCard"));
+//		suite.addTest(new PokerSceneTest("testDeal")); 
+//		suite.addTest(new PokerSceneTest("testShuffle"));
+//		suite.addTest(new PokerSceneTest("testStartGame"));
+//		suite.addTest(new PokerSceneTest("testEndGame"));
+//		suite.addTest(new PokerSceneTest("testTakeCard"));
+//		suite.addTest(new PokerSceneTest("testSetDealer"));
+		suite.addTest(new PokerSceneTest("testSetNewText"));
 		return suite;
 	}
 }

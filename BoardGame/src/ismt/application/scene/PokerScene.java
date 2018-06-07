@@ -329,7 +329,7 @@ public class PokerScene extends CardGame {
 
 	}
 
-	private void setDealer() {
+	public boolean setDealer() {
 
 		Image dealerImage = new Image(resourceFolder + "Dealer.png", 50, 50, true, true);
 		Image smallImage = new Image(resourceFolder + "Small.png", 50, 50, true, true);
@@ -387,10 +387,11 @@ public class PokerScene extends CardGame {
 			pocket = small + big;
 			break;
 		}
+		return true;
 
 	}
 
-	private void setNewText() {
+	public boolean setNewText() {
 		cash = Integer.toString(myMoney);
 		cash2 = Integer.toString(money2);
 		cash3 = Integer.toString(money3);
@@ -441,6 +442,7 @@ public class PokerScene extends CardGame {
 		} else {
 			slide.setDisable(true);
 		}
+		return true;
 
 	}
 
