@@ -269,7 +269,11 @@ public class PokerScene extends CardGame {
 			btnCall.setVisible(false);
 			btnRaise.setVisible(false);
 			btnFold.setVisible(false);
-			slide.setVisible(false);			
+			slide.setVisible(false);	
+			
+			slideValue.setText("YOU WON!!");
+			slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+			
 			break;
 
 		}
@@ -419,8 +423,6 @@ public class PokerScene extends CardGame {
 					slideValue.setFont(Font.font("Verdana", FontWeight.NORMAL, 16));
 
 					if (x == myMoney) {
-						Text text = new Text("ALL IN!");
-						text.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
 						slideValue.setText("ALL IN!");
 						slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
 					}
@@ -524,6 +526,9 @@ public class PokerScene extends CardGame {
 		turnCards.clear();
 		riverCards.clear();
 		burnCard.clear();
+		
+		
+		
 		return false;
 	}
 
