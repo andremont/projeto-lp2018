@@ -74,6 +74,15 @@ public class PokerScene extends CardGame {
 	private Text money3Text = new Text();
 	private Text money4Text = new Text();
 	private Text pocketMoney = new Text();
+	
+	private Button btnPlay = new Button("Play");
+	private Button buttonBack = new Button("Back");
+	private Button btnEnd = new Button("End");
+
+	private Button btnCheck = new Button("Check");
+	private Button btnCall = new Button("Call");
+	private Button btnRaise = new Button("Raise");
+	private Button btnFold = new Button("Fold");
 
 	private int dealer = 0;
 	private int gameState = 1;
@@ -147,14 +156,7 @@ public class PokerScene extends CardGame {
 		HBox moneyBox = new HBox(5);
 		moneyBox.setAlignment(Pos.CENTER);
 
-		Button btnPlay = new Button("Play");
-		Button buttonBack = new Button("Back");
-		Button btnEnd = new Button("End");
-
-		Button btnCheck = new Button("Check");
-		Button btnCall = new Button("Call");
-		Button btnRaise = new Button("Raise");
-		Button btnFold = new Button("Fold");
+		
 
 		pocketMoney.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
 
@@ -217,7 +219,6 @@ public class PokerScene extends CardGame {
 
 		// TODO Auto-generated method stub
 		switch (gameState) {
-
 		case 1:
 			gameState++;
 			break;
@@ -233,7 +234,42 @@ public class PokerScene extends CardGame {
 		case 4:
 			river.setVisible(true);
 			gameState++;
-
+			break;
+		case 5:
+			if (player2Hand.size() == 3) {
+				for (int i = 1; i < 3; i++) {
+					Card test = (Card) player2Hand.get(i);
+					test.turn_card();
+				}
+			}else {
+				for (int i = 0; i < 2; i++) {
+					Card test = (Card) player2Hand.get(i);
+					test.turn_card();
+					}
+				}
+			if (player3Hand.size() == 3) {
+				for (int i = 1; i < 3; i++) {
+					Card test = (Card) player3Hand.get(i);
+					test.turn_card();
+				}
+			}else {
+				for (int i = 0; i < 2; i++) {
+					Card test = (Card) player3Hand.get(i);
+					test.turn_card();}}
+			if (player4Hand.size() == 3) {
+				for (int i = 1; i < 3; i++) {
+					Card test = (Card) player4Hand.get(i);
+					test.turn_card();
+				}
+			}else {
+				for (int i = 0; i < 2; i++) {
+					Card test = (Card) player4Hand.get(i);
+					test.turn_card();}}
+			btnCheck.setVisible(false);
+			btnCall.setVisible(false);
+			btnRaise.setVisible(false);
+			btnFold.setVisible(false);
+			slide.setVisible(false);			
 			break;
 
 		}
@@ -241,9 +277,13 @@ public class PokerScene extends CardGame {
 	}
 
 	private void fold() {
-		// TODO Auto-generated method stub
+		btnCall.setVisible(false);
+		btnRaise.setVisible(false);
 		player.setVisible(false);
+		btnFold.setVisible(false);
+		slide.setVisible(false);
 		move();
+		
 
 	}
 
@@ -349,16 +389,16 @@ public class PokerScene extends CardGame {
 		money3Text.setText("Player 3: " + cash3 + "€");
 		money4Text.setText("Player 4: " + cash4 + "€");
 		pocketMoney.setText("Pocket: " + pocketCash + "€");
-		
+
 		if (myMoney != 0) {
-			
-		slide.setMin(1);
-		slide.setMax(myMoney);
-		slide.setValue(1);
-		slide.setShowTickLabels(true);
-		slide.setMajorTickUnit(myMoney / 2);
-		slide.setMinorTickCount(myMoney / 20);
-		
+
+			slide.setMin(1);
+			slide.setMax(myMoney);
+			slide.setValue(1);
+			slide.setShowTickLabels(true);
+			slide.setMajorTickUnit(myMoney / 2);
+			slide.setMinorTickCount(myMoney / 20);
+
 			switch (dealer) {
 			case 3:
 				slideValue.setText("Raise Value: " + big);
@@ -394,7 +434,7 @@ public class PokerScene extends CardGame {
 	}
 
 	public void takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
-		if (up == true) {
+		if (up) {
 			card.turn_card();
 		}
 		cardHand.add(card);
@@ -414,6 +454,7 @@ public class PokerScene extends CardGame {
 
 	@Override
 	public boolean startNewGame() {
+		
 
 		setNewText();
 
@@ -463,6 +504,18 @@ public class PokerScene extends CardGame {
 
 	@Override
 	public boolean endGame() {
+		btnCall.setVisible(true);
+		btnRaise.setVisible(true);
+		flop.setVisible(false);
+		river.setVisible(false);
+		turn.setVisible(false);
+		player.setVisible(true);
+		btnFold.setVisible(true);
+		slide.setVisible(true);
+		btnCheck.setVisible(true);
+		
+		
+		gameState = 1;
 		playerHand.clear();
 		player2Hand.clear();
 		player3Hand.clear();
@@ -477,6 +530,10 @@ public class PokerScene extends CardGame {
 	@Override
 	public void simulateGame() {
 		// TODO Auto-generated method stub
+		Card test = (Card) player2Hand.get(1);
+		// Card card = new Card();
+		// card = (Card) test;
+		test.turn_card();
 
 	}
 
