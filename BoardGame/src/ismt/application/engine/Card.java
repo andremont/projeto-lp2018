@@ -57,6 +57,7 @@ public class Card extends ImageView {
 		// A reference to an Image object will be retrieved by using
 		// a string as a key. For example, with the string "spades1" the
 		// image of the Ace of Spades is found.
+		ImageStore.card_face_images = new HashMap<String, Image>();
 		Image temp = ImageStore.card_face_images.get(cardSuit.toString() + cardRank);
 		
 		if (temp != null)
