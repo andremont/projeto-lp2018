@@ -114,12 +114,12 @@ public class PokerSceneTest extends TestCase{
 	
 	public static junit.framework.Test suite() {
 		TestSuite suite = new TestSuite();
-//		suite.addTest(new PokerSceneTest("testDeal")); 
-//		suite.addTest(new PokerSceneTest("testShuffle"));
-//		suite.addTest(new PokerSceneTest("testStartGame"));
-//		suite.addTest(new PokerSceneTest("testEndGame"));
-//		suite.addTest(new PokerSceneTest("testTakeCard"));
-//		suite.addTest(new PokerSceneTest("testSetDealer"));
+		suite.addTest(new PokerSceneTest("testDeal")); 
+		suite.addTest(new PokerSceneTest("testShuffle"));
+		suite.addTest(new PokerSceneTest("testStartGame"));
+		suite.addTest(new PokerSceneTest("testEndGame"));
+		suite.addTest(new PokerSceneTest("testTakeCard"));
+		suite.addTest(new PokerSceneTest("testSetDealer"));
 		suite.addTest(new PokerSceneTest("testSetNewText"));
 		return suite;
 	}
