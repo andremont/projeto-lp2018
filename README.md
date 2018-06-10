@@ -27,7 +27,7 @@ Assuma que pretendemos replicar a base do baralho, para depois podermos aplicar 
 
   •	Cada jogador tem um nome, uma palavra-passe, um número de pontos, um montante de dinheiro e uma mão de cartas CardDeck;
 
-Existem também 2 ficheiros com informação (info.json) e estatísticas (stats.json) dos jogadores .
+Existem também 2 ficheiros com informação (users.json) e estatísticas (stats.json) dos jogadores .
 
 ❖	TAREFAS
 
@@ -101,7 +101,7 @@ A realização de trabalho extra também será valorizada.
 
 ❖	ENTREGA
 
-O projeto final deve ser entregue até ao dia 14-06-2018 para o repositório GitHub; em alternativa poderá ser entregue num único ficheiro Zip. Após a data limite de entrega não será aceite qualquer projeto ou partes do mesmo.
+O projeto final deve ser entregue até ao dia 20-06-2018 para o repositório GitHub; em alternativa poderá ser entregue num único ficheiro Zip. Após a data limite de entrega não será aceite qualquer projeto ou partes do mesmo.
 
 
 ❖	ALGUMAS NOTAS
