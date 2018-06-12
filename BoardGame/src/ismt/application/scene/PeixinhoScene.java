@@ -1,5 +1,4 @@
 package ismt.application.scene;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import java.util.HashMap;
@@ -203,7 +202,8 @@ public class PeixinhoScene extends CardGame{
 			btnPescar.setVisible(false);
 		}
 		
-		
+		player.getChildren().addAll(carta);
+
 		//txtPontuacao.setText("GANHASTE !!");
 
 	}
@@ -213,7 +213,6 @@ public class PeixinhoScene extends CardGame{
 		point_text2 = Integer.toString(pontosHand2);
 		text_point.setText("Pontos: " +point_text + " ");
 		text_point2.setText("Pontos: " +point_text2 + " ");
-
 		return true;
 	}
 	
@@ -266,4 +265,5 @@ public class PeixinhoScene extends CardGame{
 
 	
 }
+
 
