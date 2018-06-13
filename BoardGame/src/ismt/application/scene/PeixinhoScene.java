@@ -9,7 +9,6 @@ import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
 import ismt.application.engine.CardGame;
 import ismt.application.engine.Player;
-import ismt.application.engine.Suit;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -47,6 +47,7 @@ public class PeixinhoScene extends CardGame{
 	private Button btnEnd = new Button("End");
 	private Button btnPescar = new Button("Pescar");
 	private Button btnPedir = new Button("Pedir");
+	private Label txtpontuacao = new Label();
 	private String point_text;
 	private String point_text2;
 
@@ -78,8 +79,8 @@ public class PeixinhoScene extends CardGame{
 		carta_f = carta.getChildren();
 		GridPane root = new GridPane();
 		root.setVgap(5); 
-                root.setHgap(5);       
-                root.setAlignment(Pos.BOTTOM_CENTER); 
+	    root.setHgap(5);       
+	    root.setAlignment(Pos.BOTTOM_CENTER); 
 		root.setPrefSize(1415, 770);
 
 		Region background = new Region();
@@ -144,21 +145,21 @@ public class PeixinhoScene extends CardGame{
 			endGame();
 		});
 		btnPescar.setOnAction(event ->{
-			pescar();
+			mover();
+
 		});
-                
-                btnPedir.setOnAction(event ->{
-            
-                    pedir();
-                    
-                            });
-                
-            
-        
+		btnPedir.setOnAction(event ->{
+			pedir_carta();
+		});
 		buttonBack.setOnAction(buttonBackhandler);
 
 		return root;
 
+	}
+
+	private void pedir_carta() {
+		// TODO Auto-generated method stub
+		janela();
 	}
 
 	public void takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
@@ -180,63 +181,76 @@ public class PeixinhoScene extends CardGame{
 	}
 	
 	public void janela(){
-		//String jogador1;
-		String jogador1 = JOptionPane.showInputDialog("Insira a n� da carta a pescar");
-		if(playerHand.contains(jogador1) == jogador1.equals(playerHand)){
-			JOptionPane.showConfirmDialog(null,"Tenho a carta");   // VER ISTO!!!
+		String jogador1 = JOptionPane.showInputDialog("Insira a nº da carta a pescar");
+		if(playerHand.contains(jogador1.toString())){
+			JOptionPane.showConfirmDialog(null,"Tenho a carta");
+			playerHand2.add(carta);
+			
 		}else{
-			JOptionPane.showMessageDialog(null, "ERRO");
+			JOptionPane.showMessageDialog(null, "Não tenho a carta ");
 		}
 	 }
-        public void pedir(){
-            
-            for(int i=0;i<1;i++){
-            System.out.println("Tens a carta "+playerHand.toString()+" ?");
-            
-            }
-            
-        }
-        
-        
-	public void pescar(){
-       
-          takeCard(card_deck.draw_card(), playerHand, true);
 	
-		}
-		
-		
-		//txtPontuacao.setText("GANHASTE !!");
+	public void mover(){
+		switch(jogo){
+		case 1: 
+			jogo++;
+			break;
+		case 2:
+			carta.setVisible(true);
+			jogo++;
+			break;
+		case 3:
+			if (playerHand2.size() == 3) {
+				for (int i = 1; i < 3; i++) {
+					Card test = (Card) playerHand2.get(i);
+					test.turn_card();
+				}
+			} else {
+				for (int i = 0; i < 2; i++) {
+					Card test = (Card) playerHand2.get(i);
+					test.turn_card();
+					btnPescar.setVisible(false);
+				}
+			}
 
-	
+		}	
+	      takeCard(card_deck.draw_card(), playerHand, true);
+
+		txtpontuacao.setText("GANHASTE !!");
+
+	}
 	
 	public boolean pontos(){
 		point_text = Integer.toString(pontosHand1);
 		point_text2 = Integer.toString(pontosHand2);
 		text_point.setText("Pontos: " +point_text + " ");
 		text_point2.setText("Pontos: " +point_text2 + " ");
-
 		return true;
 	}
 	
-	
+	@Override
 	public boolean startNewGame() {
-		card_deck = new CardDeck();
-
+		deal();
+		pontos();
 		playable.set(true);
 		card_deck.shuffle();
 
 		playerHand.clear();
 		playerHand2.clear();
 		
-		for (int i = 0; i < 4; i++) {
+		carta_f.clear();
+		for (int i = 0; i < 2; i++) {
 			takeCard(card_deck.draw_card(), playerHand, true);
-			takeCard(card_deck.draw_card(), playerHand2, true);
+			takeCard(card_deck.draw_card(), playerHand2, false);
+
 		}
+		
 		return false;
 	}
 
 
-	
+	@Override
 	public boolean endGame() {
 		btnPedir.setVisible(true);
 		btnPescar.setVisible(true);
@@ -252,7 +266,7 @@ public class PeixinhoScene extends CardGame{
 	}
 
 
-	
+	@Override
 	public void simulateGame() {
 		Card test = (Card) playerHand2.get(1);
 		test.turn_card();
@@ -261,3 +275,4 @@ public class PeixinhoScene extends CardGame{
 
 	
 }
+
