@@ -108,9 +108,8 @@ public class PokerScene extends CardGame {
 	}
 
 	private Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
-		playerHand =  FXCollections.observableArrayList(); 
+		playerHand = FXCollections.observableArrayList();
 
-		
 		playerHand = player.getChildren();
 		player2Hand = player2.getChildren();
 		player3Hand = player3.getChildren();
@@ -119,7 +118,7 @@ public class PokerScene extends CardGame {
 		turnCards = turn.getChildren();
 		riverCards = river.getChildren();
 		burnCard = graveyard.getChildren();
-		
+
 		btnPlay = new Button("Play");
 		buttonBack = new Button("Back");
 		btnEnd = new Button("End");
@@ -128,12 +127,11 @@ public class PokerScene extends CardGame {
 		btnCall = new Button("Call");
 		btnRaise = new Button("Raise");
 		btnFold = new Button("Fold");
-		
+
 		slide = new Slider();
 		slideValue = new Label("Raise Value: ");
-		
-		setNewText();
 
+		setNewText();
 
 		Pane root = new Pane();
 		root.setPrefSize(1415, 770);
@@ -171,9 +169,6 @@ public class PokerScene extends CardGame {
 		flop.setVisible(false);
 		turn.setVisible(false);
 		river.setVisible(false);
-		
-		
-		
 
 		// RIGHT
 		VBox rightVBox = new VBox(10);
@@ -240,7 +235,6 @@ public class PokerScene extends CardGame {
 
 	private void move() {
 
-		// TODO Auto-generated method stub
 		switch (gameState) {
 		case 1:
 			gameState++;
@@ -298,13 +292,9 @@ public class PokerScene extends CardGame {
 			btnFold.setVisible(false);
 			slide.setVisible(false);
 
-			
-			
 			playable.set(false);
 			endGame();
-
 			break;
-
 		}
 
 	}
@@ -425,12 +415,10 @@ public class PokerScene extends CardGame {
 
 		if (myMoney > 0) {
 
-			
 			slide.setMin(1);
 			slide.setMax(myMoney);
 			slide.setValue(1);
 			slide.setShowTickLabels(true);
-			
 			slide.setMajorTickUnit(myMoney / 2);
 			slide.setMinorTickCount(myMoney / 20);
 
@@ -444,7 +432,6 @@ public class PokerScene extends CardGame {
 				slide.setMin(small);
 				break;
 			}
-			
 
 			slide.valueProperty().addListener(new ChangeListener<Number>() {
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
@@ -458,7 +445,6 @@ public class PokerScene extends CardGame {
 						slideValue.setText("ALL IN!");
 						slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
 					}
-
 				}
 			});
 		} else {
@@ -472,8 +458,8 @@ public class PokerScene extends CardGame {
 		if (up) {
 			card.turn_card();
 		}
-		
-			cardHand.add(card);
+
+		cardHand.add(card);
 		return true;
 	}
 
@@ -494,50 +480,14 @@ public class PokerScene extends CardGame {
 	public boolean startNewGame() {
 
 		setNewText();
-
 		deal();
 
 		playable.set(true);
 		message.setText("New game started");
 
 		card_deck.shuffle();
-//		
-//		playerHand =  FXCollections.observableArrayList();
-//		player2Hand =  FXCollections.observableArrayList();
-//		player3Hand =  FXCollections.observableArrayList();
-//		player4Hand =  FXCollections.observableArrayList();
-//		floopCards =  FXCollections.observableArrayList();
-//		burnCard =  FXCollections.observableArrayList();
-	
-//		playerHand = player.getChildren();
-//		player2Hand = player2.getChildren();
-//		player3Hand = player3.getChildren();
-//		player4Hand = player4.getChildren();
-//		floopCards = flop.getChildren();
-//		turnCards = turn.getChildren();
-//		riverCards = river.getChildren();
-//		burnCard = graveyard.getChildren();
-		
-		if (playerHand != null) {
-			playerHand.clear();
-		}
-		if (player2Hand != null) {
-			player2Hand.clear();
-		}
-		if (player3Hand != null) {
-			player3Hand.clear();
-		}
-		if (player4Hand != null) {
-			player4Hand.clear();
-		}
-		if (floopCards != null) {
-			floopCards.clear();
-		}
-		if (burnCard != null) {
-			burnCard.clear();
-		}
-		
-		
+
+		clearHands();		
 		setDealer();
 
 		for (int i = 0; i < 2; i++) {
@@ -570,10 +520,7 @@ public class PokerScene extends CardGame {
 
 	@Override
 	public boolean endGame() {
-		
-		slideValue.setText("YOU WON!!");
-		slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
-		
+
 		btnCall.setVisible(true);
 		btnRaise.setVisible(true);
 		flop.setVisible(false);
@@ -585,16 +532,20 @@ public class PokerScene extends CardGame {
 		btnCheck.setVisible(true);
 
 		gameState = 1;
+
+		clearHands();
 		
-//		playerHand =  FXCollections.observableArrayList();
-//		player2Hand =  FXCollections.observableArrayList();
-//		player3Hand =  FXCollections.observableArrayList();
-//		player4Hand =  FXCollections.observableArrayList();
-//		floopCards =  FXCollections.observableArrayList();
-//		burnCard =  FXCollections.observableArrayList();
-//		turnCards =  FXCollections.observableArrayList();
-//		riverCards =  FXCollections.observableArrayList();
-		
+		slideValue.setText("YOU WON!!");
+		slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+
+		// TODO gravar nome dos players
+		// int x = player.getPoints() + 1;
+		// player.setPoints(x);
+
+		return true;
+	}
+
+	private void clearHands() {
 		if (playerHand != null) {
 			playerHand.clear();
 		}
@@ -619,20 +570,14 @@ public class PokerScene extends CardGame {
 		if (riverCards != null) {
 			riverCards.clear();
 		}
-		
-	
-		
-		return true;
 	}
 
 	@Override
 	public void simulateGame() {
-		// TODO Auto-generated method stub
+
 		Card test = (Card) player2Hand.get(1);
-		// Card card = new Card();
-		// card = (Card) test;
+		//Card card = new Card();
+		//card = (Card) test;
 		test.turn_card();
-
 	}
-
 }

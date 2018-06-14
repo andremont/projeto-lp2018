@@ -188,7 +188,7 @@ public class Utils {
 				if(userObject != JsonArray.NULL)
 				{
 					newPlayer.setName(player);
-					newPlayer.setName(userObject.getString("password"));
+					newPlayer.setPassword(userObject.getString("password"));
 					
 					if (userObject.containsKey("money"))
 						newPlayer.setMoney(Integer.parseInt(userObject.getString("money")));
