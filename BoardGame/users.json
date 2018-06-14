@@ -43,7 +43,8 @@
             }
         ],
         "password": "root",
-        "money": "1100"
+        "money": "1100",
+        "points": "555"
     },
     
      "admin": {
@@ -90,6 +91,7 @@
             }
         ],
         "password": "pp",
-        "money": "11100"
+        "money": "11100",
+        "points": "445"
     }
 }
