@@ -31,7 +31,7 @@ public class Main extends Application {
 	Scene sceneLogin, sceneMain, 
 		  sceneMemorize, sceneBlackJack,
 		  sceneViewStats, sceneManagePlayers, sceneViewRules,
-		  sceneViewPoker,  sceneViewSueca, sceneViewBurro, sceneViewPeixinho, sceneViewSolitaire; 
+		  sceneViewPoker,  sceneViewSueca, sceneViewBurro, sceneViewPeixinho, sceneViewSolitaire;
 
 	public static void main(String[] args) {
 
@@ -45,9 +45,10 @@ public class Main extends Application {
 		// Build individual screens
 		buildLoginScene(primaryStage);
 		buildMainScene(primaryStage);
+
+		// Build games' screens
 		sceneMemorize = new MemorizeScene().buildPlayScene(primaryStage, sceneMain);
-		sceneBlackJack = new BlackJackScene().buildPlayScene(primaryStage, sceneMain);
-		
+		sceneBlackJack = new BlackJackScene().buildPlayScene(primaryStage, sceneMain);	
 		sceneManagePlayers = new PlayersScene().buildPlayScene(primaryStage, sceneMain);
 		sceneViewStats = new StatsScene().buildPlayScene(primaryStage, sceneMain);
 		sceneViewRules = new RulesScene().buildPlayScene(primaryStage, sceneMain);
@@ -55,7 +56,7 @@ public class Main extends Application {
 		sceneViewSueca = new SuecaScene().buildPlayScene(primaryStage, sceneMain); 
 		sceneViewBurro = new BurroScene().buildPlayScene(primaryStage, sceneMain);
 		sceneViewPeixinho = new PeixinhoScene().buildPlayScene(primaryStage, sceneMain);
-		sceneViewSolitaire = new SolitaireScene().buildPlayScene(primaryStage, sceneMain);
+		sceneViewSolitaire = new SolitaireScene().buildPlayScene(primaryStage, sceneMain);	
 		
 		// Set initial scene for login
 		primaryStage.setScene(sceneLogin);
@@ -116,8 +117,9 @@ public class Main extends Application {
 		buttonLogin.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				// if(Utils.validateUser(userTextField.getText(), pwBox.getText())){ // FIXME
-				if(true){
+				if(Utils.validateUser(userTextField.getText(), pwBox.getText())){
+					// Save user credentials into Player class
+					Context.getInstance().setPlayer(userTextField.getText());
 					actiontarget.setText("Correct!");
 					primaryStage.setScene(sceneMain);
 				}
@@ -159,6 +161,7 @@ public class Main extends Application {
 		Button buttonPlayers = new Button("Manage players");
 		Button buttonRules = new Button("View rules");
 		Button buttonLogout = new Button("Logout");
+		
 		buttonMemorize.setMaxWidth(BUTTON_SIZE);
 		buttonBlackJack.setMaxWidth(BUTTON_SIZE);
 		buttonPoker.setMaxWidth(BUTTON_SIZE);
