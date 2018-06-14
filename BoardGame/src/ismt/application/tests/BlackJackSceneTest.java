@@ -6,6 +6,7 @@ import org.junit.Test;
 import ismt.application.engine.CardDeck;
 import ismt.application.scene.BlackJackScene;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.stage.Stage;
 import junit.framework.TestCase;
@@ -20,6 +21,7 @@ public class BlackJackSceneTest extends TestCase {
 	@Before
 	protected void setUp() {
 		myBlackJack = new BlackJackScene();
+		myBlackJack.playerHand = FXCollections.observableArrayList();
 		myAppMock = new MainMock(myBlackJack);
 		myBlackJack.card_deck = new CardDeck();
 		expected = myBlackJack.card_deck;
@@ -91,7 +93,7 @@ public class BlackJackSceneTest extends TestCase {
 	@Test
 	public void testTakeCard() {
 		boolean expected = true;
-		boolean result = myBlackJack.takeCard(1, myBlackJack.card_deck.draw_card(), myBlackJack.dealerHand, myBlackJack.pointsDealer);
+		boolean result = myBlackJack.takeCard(1, myBlackJack.card_deck.draw_card(), myBlackJack.playerHand, myBlackJack.pointsPlayer);
 		assertEquals(expected, result);
 	}
 
