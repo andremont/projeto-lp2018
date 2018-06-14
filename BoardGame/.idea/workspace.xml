@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f958add-d793-4790-9e8a-762818e232c3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_json_1_1_0_M1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/junit_4_10.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGame.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ismt/application/engine/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ismt/application/engine/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ismt/application/tests/StatsSceneTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ismt/application/tests/StatsSceneTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,10 +21,9 @@
       <file leaf-file-name="StatsScene.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ismt/application/scene/StatsScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+            <state relative-caret-position="90">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#2629#2642#0" expanded="true" />
                 <element signature="e#2712#2733#0" expanded="true" />
                 <element signature="e#2949#2971#0" expanded="true" />
@@ -33,20 +36,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StatsSceneTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StatsSceneTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ismt/application/tests/StatsSceneTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="16" column="39" lean-forward="true" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+            <state relative-caret-position="-50">
+              <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+              <folding>
+                <element signature="e#1484#1485#0" expanded="true" />
+                <element signature="e#1502#1503#0" expanded="true" />
+              </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ismt/application/engine/Utils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="147" column="60" selection-start-line="147" selection-start-column="60" selection-end-line="147" selection-end-column="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stats.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stats.json">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ismt/application/engine/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="43" selection-start-line="43" selection-end-line="43" />
+            <state relative-caret-position="330">
+              <caret line="41" column="43" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -78,6 +99,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/ismt/application/tests/StatsSceneTest.java" />
+        <option value="$PROJECT_DIR$/src/ismt/application/engine/Utils.java" />
       </list>
     </option>
   </component>
@@ -133,13 +155,6 @@
               <item name="BoardGame" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BoardGame" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BoardGame" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="StatsSceneTest.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
           </expand>
           <select />
@@ -242,12 +257,12 @@
       <updated>1528975926146</updated>
       <workItem from="1528975927690" duration="121000" />
       <workItem from="1528976051032" duration="95000" />
-      <workItem from="1528976166448" duration="539000" />
+      <workItem from="1528976166448" duration="1024000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="755000" />
+    <option name="totallyTimeSpent" value="1240000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="140" y="42" width="1400" height="908" extended-state="0" />
@@ -297,7 +312,6 @@
         <state relative-caret-position="660">
           <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="e#2629#2642#0" expanded="true" />
             <element signature="e#2712#2733#0" expanded="true" />
             <element signature="e#2949#2971#0" expanded="true" />
@@ -306,13 +320,6 @@
             <element signature="e#3497#3519#0" expanded="true" />
             <element signature="e#3675#3697#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ismt/application/engine/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
         </state>
       </provider>
     </entry>
@@ -330,12 +337,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ismt/application/engine/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="41" column="43" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ismt/application/scene/StatsScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="e#2629#2642#0" expanded="true" />
             <element signature="e#2712#2733#0" expanded="true" />
             <element signature="e#2949#2971#0" expanded="true" />
@@ -349,8 +362,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ismt/application/tests/StatsSceneTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="16" column="39" lean-forward="true" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+        <state relative-caret-position="-50">
+          <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+          <folding>
+            <element signature="e#1484#1485#0" expanded="true" />
+            <element signature="e#1502#1503#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stats.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ismt/application/engine/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="147" column="60" selection-start-line="147" selection-start-column="60" selection-end-line="147" selection-end-column="60" />
         </state>
       </provider>
     </entry>
@@ -431,7 +458,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>javax.json-1.1.0-M1</last-edited>
+          <last-edited>junit-4.10</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

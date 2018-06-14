@@ -57,7 +57,7 @@ public class StatsSceneTest extends TestCase {
 		} // Time to use the app, without this the thread will be killed before
 	}
 	
-	public BlackJackSceneTest(String name) {
+	public StatsSceneTest(String name) {
 		super(name);
 	}
 	

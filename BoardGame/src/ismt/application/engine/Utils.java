@@ -145,7 +145,7 @@ public class Utils {
 
 			// Create Json reader to read the file in Json format
 			JsonReader jsonReader = Json.createReader(fileReader);
-			JsonObject userObject = jsonReader.readObject().get(player).asJsonObject();
+			JsonObject userObject = jsonReader.readObject().getJsonObject(player);
 			jsonReader.close();
 			fileReader.close();
 
