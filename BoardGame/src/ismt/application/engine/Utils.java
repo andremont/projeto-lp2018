@@ -188,7 +188,7 @@ public class Utils {
 				if(userObject != JsonArray.NULL)
 				{
 					newPlayer.setName(player);
-
+					newPlayer.setName(userObject.getString("password"));
 					
 					if (userObject.containsKey("money"))
 						newPlayer.setMoney(Integer.parseInt(userObject.getString("money")));
@@ -264,11 +264,12 @@ public class Utils {
 
 			// Add all player's deck cards
 			JsonObjectBuilder userBuilder = Json.createObjectBuilder();
-			userBuilder.add("deck", buildCardsArray(player.getDeck())); 
+			//userBuilder.add("deck", buildCardsArray(player.getDeck())); 
 			
 			// Add all player's properties and attributes
 			userBuilder.add("password", player.getPassword())
-			.add("money", player.getMoney() + "");
+			.add("money", player.getMoney() + "")
+			.add("points", player.getPoints() + "");
 
 			usersBuilder.add(player.getName(), userBuilder);
 
