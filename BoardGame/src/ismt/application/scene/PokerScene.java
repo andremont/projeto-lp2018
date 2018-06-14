@@ -571,8 +571,7 @@ public class PokerScene extends CardGame {
 	@Override
 	public boolean endGame() {
 		
-		slideValue.setText("YOU WON!!");
-		slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+		
 		
 		btnCall.setVisible(true);
 		btnRaise.setVisible(true);
@@ -619,7 +618,8 @@ public class PokerScene extends CardGame {
 		if (riverCards != null) {
 			riverCards.clear();
 		}
-		
+		slideValue.setText("YOU WON!!");
+		slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
 	
 		
 		return true;
