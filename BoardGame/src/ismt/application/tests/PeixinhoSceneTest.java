@@ -88,7 +88,13 @@ public class PeixinhoSceneTest extends TestCase{
 		assertEquals(expected, result);
 	}
 
-	
+	@Test
+	public void testTakeCard() {
+		boolean expected = true;
+		boolean result =true;
+		myPeixinho.takeCard(myPeixinho.card_deck.draw_card(), myPeixinho.playerHand,true);
+		assertEquals(expected, result);
+	}
 	public static junit.framework.Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTest(new PeixinhoSceneTest("testDeal")); 

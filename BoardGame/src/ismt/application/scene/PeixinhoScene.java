@@ -34,16 +34,18 @@ public class PeixinhoScene extends CardGame{
 	final String imageFolder = resourceFolder + "/playing_cards_images/";
 	private SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
 
-	private ObservableList<Node> playerHand, playerHand2,carta_f;
+	public ObservableList<Node> playerHand;
+	private ObservableList<Node> playerHand2;
+	private ObservableList<Node> carta_f;
 
 	private HBox player = new HBox(5); //BAIXO
 	private HBox player2 = new HBox(5);
 	private VBox carta = new VBox(5);
-	private Button btnPlay = new Button("Play");
-	private Button buttonBack = new Button("Back");
-	private Button btnEnd = new Button("End");
-	private Button btnPescar = new Button("Pescar");
-	private Button btnPedir = new Button("Pedir");
+	private Button btnPlay;
+	private Button buttonBack;
+	private Button btnEnd;
+	private Button btnPescar;;
+	private Button btnPedir ;
 	private Label txtpontuacao = new Label();
 	private String point_text;
 	private String point_text2;
@@ -70,7 +72,12 @@ public class PeixinhoScene extends CardGame{
 	}
 
 	private Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
-
+		
+		btnPlay = new Button("Play");
+		buttonBack= new Button("Back");
+		btnEnd = new Button("End");
+		btnPescar = new Button("Pescar");
+		btnPedir = new Button("Pedir");
 		playerHand = player.getChildren();
 		playerHand2 = player2.getChildren();
 		carta_f = carta.getChildren();
@@ -159,11 +166,14 @@ public class PeixinhoScene extends CardGame{
 		janela();
 	}
 
-	public void takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
+	public boolean takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
 		if (up) {
 			card.turn_card();
+			return true;
 		}
 		cardHand.add(card);
+		
+		return false;
 	}
 
 	@Override
@@ -187,7 +197,7 @@ public class PeixinhoScene extends CardGame{
 			Card temp = getCardInHand(a, playerHand2);
 
 			if(temp.getRank()!=0){
-				JOptionPane.showConfirmDialog(null,"Tenho a carta");
+				JOptionPane.showMessageDialog(null,"Tenho a carta");
 				
 				playerHand.add(temp);
 				playerHand2.remove(temp);
