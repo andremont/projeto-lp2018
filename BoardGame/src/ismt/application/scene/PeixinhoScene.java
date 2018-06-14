@@ -178,16 +178,26 @@ public class PeixinhoScene extends CardGame{
 	}
 	
 	public void janela(){
-		String cartaPedida = JOptionPane.showInputDialog("Insira a nº da carta a pescar");
-		Card temp = getCardInHand(cartaPedida, playerHand);
-		if(temp.getRank()!=0){
-			JOptionPane.showConfirmDialog(null,"Tenho a carta");
-			playerHand.add(temp);
-			playerHand2.remove(temp);
+		String a = "";
+		int cartaPedida =Integer.parseInt( 
+				JOptionPane.showInputDialog("Insira a nº da carta a pescar"));
+		if(cartaPedida >= 1 && cartaPedida < 15){
 			
+			a = String.valueOf(cartaPedida);
+			Card temp = getCardInHand(a, playerHand2);
+
+			if(temp.getRank()!=0){
+				JOptionPane.showConfirmDialog(null,"Tenho a carta");
+				
+				playerHand.add(temp);
+				playerHand2.remove(temp);
+				
+			}
+		
 		}else{
 			JOptionPane.showMessageDialog(null, "Não tenho a carta ");
 		}
+		
 	 }
 	
 	private Card getCardInHand(String cartaPedida, ObservableList<Node> playerHand3) {
@@ -230,7 +240,7 @@ public class PeixinhoScene extends CardGame{
 
 		txtpontuacao.setText("GANHASTE !!");
 
-	}
+	}//nsdmf
 	
 	public boolean pontos(){
 		point_text = Integer.toString(pontosHand1);
@@ -253,7 +263,7 @@ public class PeixinhoScene extends CardGame{
 		carta_f.clear();
 		for (int i = 0; i < 4; i++) {
 			takeCard(card_deck.draw_card(), playerHand, true);
-			takeCard(card_deck.draw_card(), playerHand2, false);
+			takeCard(card_deck.draw_card(), playerHand2, true);
 
 		}
 		
