@@ -195,7 +195,7 @@ public class Utils {
 					if (userObject.containsKey("deck"))
 						newPlayer.setDeck(buildCardArrayFromFile("deck", userObject));
 					if (userObject.containsKey("points"))
-						newPlayer.setDeck(buildCardArrayFromFile("points", userObject));
+						newPlayer.setPoints(Integer.parseInt(userObject.getString("points")));
 				}
 
 		} catch (IOException e) {
