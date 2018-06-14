@@ -1,3 +1,5 @@
+package ismt.application.scene;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javax.swing.JOptionPane;
