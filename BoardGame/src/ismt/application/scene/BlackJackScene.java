@@ -3,6 +3,9 @@ package ismt.application.scene;
 import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
 import ismt.application.engine.CardGame;
+import ismt.application.engine.Context;
+import ismt.application.engine.Player;
+import ismt.application.engine.Utils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,18 +30,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class BlackJackScene extends CardGame {
 
+	private String playerName = "PLAYER";
 	private int acesPlayer = 0, acesDealer = 0;
 	public SimpleIntegerProperty pointsPlayer = new SimpleIntegerProperty(0), pointsDealer = new SimpleIntegerProperty(0);
 	private SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
 	public ObservableList<Node> dealerHand = FXCollections.observableArrayList(), playerHand = FXCollections.observableArrayList();
 	private Text message = new Text();
 	private HBox dealerCards = new HBox(20),  playerCards = new HBox(20);
+	private Player thePlayer;
 	
 	public Scene buildPlayScene(Stage primaryStage, Scene sceneMain) {
-
+		
 		EventHandler<ActionEvent> buttonBackhandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -153,6 +160,9 @@ public class BlackJackScene extends CardGame {
 	
 	@Override
 	public boolean startNewGame() {
+		playerName = Context.getInstance().getName();
+		dealerHand = dealerCards.getChildren();
+		playerHand = playerCards.getChildren();
 		playable.set(true);
 		message.setText("New game started");
 
@@ -160,25 +170,31 @@ public class BlackJackScene extends CardGame {
 		card_deck.shuffle();
 		
 		if (dealerHand != null)
-			dealerHand.clear();
+			if (!dealerHand.isEmpty())
+				dealerHand.clear();
 		acesDealer = 0;
 		pointsDealer.set(0);
 		
-		if (dealerHand != null)
+		if (playerHand != null)
+			if (!playerHand.isEmpty())
 			playerHand.clear();
 		acesPlayer = 0;
 		pointsPlayer.set(0);
 
-		takeCard(acesDealer,card_deck.draw_card(),dealerHand, pointsDealer);
-		takeCard(acesDealer,card_deck.draw_card(),dealerHand, pointsDealer);
-		takeCard(acesPlayer,card_deck.draw_card(),playerHand, pointsPlayer);
-		takeCard(acesPlayer,card_deck.draw_card(),playerHand, pointsPlayer);
-		
+		takeCard(acesDealer, card_deck.draw_card(), dealerHand, pointsDealer);
+		takeCard(acesDealer, card_deck.draw_card(), dealerHand, pointsDealer);
+		takeCard(acesPlayer, card_deck.draw_card(), playerHand, pointsPlayer);
+		takeCard(acesPlayer, card_deck.draw_card(), playerHand, pointsPlayer);
+
 		return true;
 	}
 	
 	@Override
 	public boolean endGame() {
+		this.thePlayer = Context.getInstance().getPlayer();
+		playerName = Context.getInstance().getName();
+		dealerHand = dealerCards.getChildren();
+		playerHand = playerCards.getChildren();
 		playable.set(false);
 
 		int dealerValue = pointsDealer.get();
@@ -190,28 +206,37 @@ public class BlackJackScene extends CardGame {
 				|| (dealerValue < 21 && dealerValue > playerValue)) {
 			winner = "DEALER";
 		} else if (playerValue == 21 || dealerValue > 21 || playerValue > dealerValue) {
-			winner = "PLAYER";
+			winner = playerName;
 		}
 		message.setText(winner + " WON");
+		
+		if (winner.equals(playerName)){
+			thePlayer.setPoints(thePlayer.getPoints()+1);
+			Utils.SaveUser(thePlayer);
+		}
 		
 		return true;
 	}
 
 	public boolean takeCard(int aces, Card card, ObservableList<Node> cardHand, SimpleIntegerProperty value) {
 		
-		cardHand.add(card.generateCardImage());
+		javafx.application.Platform.runLater(() -> {
+            try {
+            	cardHand.add(card.generateCardImage());
+            } catch (Exception ex) {
+            	System.out.println("Problem with cardHand: " + ex);
+            }
+        });
 		
-		if (card.getRank() == 1) {
+		if (card.getRank() == 1) 
 			aces++;
-		}
 
 		if (value.get() + card.getPoints() > 21 && aces > 0) {
-			value.set(value.get() + card.getRank() - 10); // then count ace as
-															// '1' not '11'
+			value.set(value.get() + card.getRank() - 10); // then count ace as '1' not '11'
 			aces--;
-		} else {
+		} 
+		else
 			value.set(value.get() + card.getRank());
-		}
 		
 		return true;
 	}
