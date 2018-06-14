@@ -3,9 +3,7 @@ package ismt.application.tests;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import ismt.application.engine.CardDeck;
-import ismt.application.scene.BlackJackScene;
 import ismt.application.scene.PokerScene;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -97,12 +95,7 @@ public class PokerSceneTest extends TestCase{
 		assertEquals(expected, result);
 	}
 	
-	@Test
-	public void testSetDealer() {
-		boolean expected = true;
-		boolean result = myPoker.setDealer();
-		assertEquals(expected, result);
-	}
+	
 	
 	@Test
 	public void testSetNewText() {
@@ -116,10 +109,9 @@ public class PokerSceneTest extends TestCase{
 		TestSuite suite = new TestSuite();
 		suite.addTest(new PokerSceneTest("testDeal")); 
 		suite.addTest(new PokerSceneTest("testShuffle"));
-		suite.addTest(new PokerSceneTest("testStartGame"));
+		//suite.addTest(new PokerSceneTest("testStartGame"));
 		suite.addTest(new PokerSceneTest("testEndGame"));
 		suite.addTest(new PokerSceneTest("testTakeCard"));
-		suite.addTest(new PokerSceneTest("testSetDealer"));
 		suite.addTest(new PokerSceneTest("testSetNewText"));
 		return suite;
 	}

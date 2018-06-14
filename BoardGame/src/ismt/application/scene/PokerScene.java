@@ -10,7 +10,7 @@ import ismt.application.engine.Player;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener.Change;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -68,8 +67,8 @@ public class PokerScene extends CardGame {
 	private int big = 10;
 	private int small = big / 2;
 
-	final Slider slide = new Slider();
-	final Label slideValue = new Label("Raise Value: ");
+	private Slider slide;
+	private Label slideValue;
 
 	private String cash;
 	private String cash2;
@@ -83,14 +82,14 @@ public class PokerScene extends CardGame {
 	private Text money4Text = new Text();
 	private Text pocketMoney = new Text();
 
-	private Button btnPlay = new Button("Play");
-	private Button buttonBack = new Button("Back");
-	private Button btnEnd = new Button("End");
+	private Button btnPlay;
+	private Button buttonBack;
+	private Button btnEnd;
 
-	private Button btnCheck = new Button("Check");
-	private Button btnCall = new Button("Call");
-	private Button btnRaise = new Button("Raise");
-	private Button btnFold = new Button("Fold");
+	private Button btnCheck;
+	private Button btnCall;
+	private Button btnRaise;
+	private Button btnFold;
 
 	private int dealer = 0;
 	private int gameState = 1;
@@ -109,9 +108,9 @@ public class PokerScene extends CardGame {
 	}
 
 	private Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
+		playerHand =  FXCollections.observableArrayList(); 
 
-		setNewText();
-
+		
 		playerHand = player.getChildren();
 		player2Hand = player2.getChildren();
 		player3Hand = player3.getChildren();
@@ -120,6 +119,21 @@ public class PokerScene extends CardGame {
 		turnCards = turn.getChildren();
 		riverCards = river.getChildren();
 		burnCard = graveyard.getChildren();
+		
+		btnPlay = new Button("Play");
+		buttonBack = new Button("Back");
+		btnEnd = new Button("End");
+
+		btnCheck = new Button("Check");
+		btnCall = new Button("Call");
+		btnRaise = new Button("Raise");
+		btnFold = new Button("Fold");
+		
+		slide = new Slider();
+		slideValue = new Label("Raise Value: ");
+		
+		setNewText();
+
 
 		Pane root = new Pane();
 		root.setPrefSize(1415, 770);
@@ -157,6 +171,9 @@ public class PokerScene extends CardGame {
 		flop.setVisible(false);
 		turn.setVisible(false);
 		river.setVisible(false);
+		
+		
+		
 
 		// RIGHT
 		VBox rightVBox = new VBox(10);
@@ -281,8 +298,10 @@ public class PokerScene extends CardGame {
 			btnFold.setVisible(false);
 			slide.setVisible(false);
 
-			slideValue.setText("YOU WON!!");
-			slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+			
+			
+			playable.set(false);
+			endGame();
 
 			break;
 
@@ -404,12 +423,14 @@ public class PokerScene extends CardGame {
 		money4Text.setText("Player 4: " + cash4 + "€");
 		pocketMoney.setText("Pocket: " + pocketCash + "€");
 
-		if (myMoney != 0) {
+		if (myMoney > 0) {
 
+			
 			slide.setMin(1);
 			slide.setMax(myMoney);
 			slide.setValue(1);
 			slide.setShowTickLabels(true);
+			
 			slide.setMajorTickUnit(myMoney / 2);
 			slide.setMinorTickCount(myMoney / 20);
 
@@ -423,6 +444,7 @@ public class PokerScene extends CardGame {
 				slide.setMin(small);
 				break;
 			}
+			
 
 			slide.valueProperty().addListener(new ChangeListener<Number>() {
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
@@ -450,8 +472,8 @@ public class PokerScene extends CardGame {
 		if (up) {
 			card.turn_card();
 		}
-		cardHand.add(card);
 		
+			cardHand.add(card);
 		return true;
 	}
 
@@ -479,14 +501,43 @@ public class PokerScene extends CardGame {
 		message.setText("New game started");
 
 		card_deck.shuffle();
-
-		playerHand.clear();
-		player2Hand.clear();
-		player3Hand.clear();
-		player4Hand.clear();
-		floopCards.clear();
-		burnCard.clear();
-
+//		
+//		playerHand =  FXCollections.observableArrayList();
+//		player2Hand =  FXCollections.observableArrayList();
+//		player3Hand =  FXCollections.observableArrayList();
+//		player4Hand =  FXCollections.observableArrayList();
+//		floopCards =  FXCollections.observableArrayList();
+//		burnCard =  FXCollections.observableArrayList();
+	
+//		playerHand = player.getChildren();
+//		player2Hand = player2.getChildren();
+//		player3Hand = player3.getChildren();
+//		player4Hand = player4.getChildren();
+//		floopCards = flop.getChildren();
+//		turnCards = turn.getChildren();
+//		riverCards = river.getChildren();
+//		burnCard = graveyard.getChildren();
+		
+		if (playerHand != null) {
+			playerHand.clear();
+		}
+		if (player2Hand != null) {
+			player2Hand.clear();
+		}
+		if (player3Hand != null) {
+			player3Hand.clear();
+		}
+		if (player4Hand != null) {
+			player4Hand.clear();
+		}
+		if (floopCards != null) {
+			floopCards.clear();
+		}
+		if (burnCard != null) {
+			burnCard.clear();
+		}
+		
+		
 		setDealer();
 
 		for (int i = 0; i < 2; i++) {
@@ -514,11 +565,15 @@ public class PokerScene extends CardGame {
 		System.out.println();
 
 		setNewText();
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean endGame() {
+		
+		slideValue.setText("YOU WON!!");
+		slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+		
 		btnCall.setVisible(true);
 		btnRaise.setVisible(true);
 		flop.setVisible(false);
@@ -530,16 +585,44 @@ public class PokerScene extends CardGame {
 		btnCheck.setVisible(true);
 
 		gameState = 1;
-		playerHand.clear();
-		player2Hand.clear();
-		player3Hand.clear();
-		player4Hand.clear();
-		floopCards.clear();
-		turnCards.clear();
-		riverCards.clear();
-		burnCard.clear();
-
-		return false;
+		
+//		playerHand =  FXCollections.observableArrayList();
+//		player2Hand =  FXCollections.observableArrayList();
+//		player3Hand =  FXCollections.observableArrayList();
+//		player4Hand =  FXCollections.observableArrayList();
+//		floopCards =  FXCollections.observableArrayList();
+//		burnCard =  FXCollections.observableArrayList();
+//		turnCards =  FXCollections.observableArrayList();
+//		riverCards =  FXCollections.observableArrayList();
+		
+		if (playerHand != null) {
+			playerHand.clear();
+		}
+		if (player2Hand != null) {
+			player2Hand.clear();
+		}
+		if (player3Hand != null) {
+			player3Hand.clear();
+		}
+		if (player4Hand != null) {
+			player4Hand.clear();
+		}
+		if (floopCards != null) {
+			floopCards.clear();
+		}
+		if (burnCard != null) {
+			burnCard.clear();
+		}
+		if (turnCards != null) {
+			turnCards.clear();
+		}
+		if (riverCards != null) {
+			riverCards.clear();
+		}
+		
+	
+		
+		return true;
 	}
 
 	@Override
