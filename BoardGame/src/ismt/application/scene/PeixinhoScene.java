@@ -1,9 +1,5 @@
-package ismt.application.scene;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JOptionPane;
 import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
@@ -18,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -181,16 +176,30 @@ public class PeixinhoScene extends CardGame{
 	}
 	
 	public void janela(){
-		String jogador1 = JOptionPane.showInputDialog("Insira a nº da carta a pescar");
-		if(playerHand.contains(jogador1.toString())){
+		String cartaPedida = JOptionPane.showInputDialog("Insira a nº da carta a pescar");
+		Card temp = getCardInHand(cartaPedida, playerHand);
+		if(temp.getRank()!=0){
 			JOptionPane.showConfirmDialog(null,"Tenho a carta");
-			playerHand2.add(carta);
+			playerHand.add(temp);
+			playerHand2.remove(temp);
 			
 		}else{
 			JOptionPane.showMessageDialog(null, "Não tenho a carta ");
 		}
 	 }
 	
+	private Card getCardInHand(String cartaPedida, ObservableList<Node> playerHand3) {
+		Card temp = new Card();
+		
+		for(int i=0; i< playerHand3.size();i++){
+			temp = (Card)playerHand3.get(i);
+			if(cartaPedida.equals(temp.getRank()+"")){
+				return temp;
+			}
+		}
+		return temp;
+	}
+
 	public void mover(){
 		switch(jogo){
 		case 1: 
@@ -240,7 +249,7 @@ public class PeixinhoScene extends CardGame{
 		playerHand2.clear();
 		
 		carta_f.clear();
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 4; i++) {
 			takeCard(card_deck.draw_card(), playerHand, true);
 			takeCard(card_deck.draw_card(), playerHand2, false);
 
