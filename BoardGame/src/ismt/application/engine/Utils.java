@@ -145,7 +145,7 @@ public class Utils {
 
 			// Create Json reader to read the file in Json format
 			JsonReader jsonReader = Json.createReader(fileReader);
-			JsonObject userObject = jsonReader.readObject().getJsonObject(player);
+			JsonObject userObject = jsonReader.readObject().get(player).asJsonObject();
 			jsonReader.close();
 			fileReader.close();
 
@@ -188,7 +188,7 @@ public class Utils {
 				if(userObject != JsonArray.NULL)
 				{
 					newPlayer.setName(player);
-					newPlayer.setName(userObject.getString("password"));
+					newPlayer.setPassword(userObject.getString("password"));
 					
 					if (userObject.containsKey("money"))
 						newPlayer.setMoney(Integer.parseInt(userObject.getString("money")));
