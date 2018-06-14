@@ -194,6 +194,8 @@ public class Utils {
 						newPlayer.setMoney(Integer.parseInt(userObject.getString("money")));
 					if (userObject.containsKey("deck"))
 						newPlayer.setDeck(buildCardArrayFromFile("deck", userObject));
+					if (userObject.containsKey("points"))
+						newPlayer.setDeck(buildCardArrayFromFile("points", userObject));
 				}
 
 		} catch (IOException e) {
