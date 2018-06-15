@@ -46,7 +46,7 @@ public class PeixinhoScene extends CardGame{
 	private Button btnEnd;
 	private Button btnPescar;;
 	private Button btnPedir ;
-	private Label txtpontuacao = new Label();
+	private Label txtpontuacao;
 	private String point_text;
 	private String point_text2;
 
@@ -78,6 +78,7 @@ public class PeixinhoScene extends CardGame{
 		btnEnd = new Button("End");
 		btnPescar = new Button("Pescar");
 		btnPedir = new Button("Pedir");
+		txtpontuacao = new Label();
 		playerHand = player.getChildren();
 		playerHand2 = player2.getChildren();
 		carta_f = carta.getChildren();
@@ -169,11 +170,10 @@ public class PeixinhoScene extends CardGame{
 	public boolean takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
 		if (up) {
 			card.turn_card();
-			return true;
 		}
 		cardHand.add(card);
 		
-		return false;
+		return true;
 	}
 
 	@Override
@@ -273,11 +273,11 @@ public class PeixinhoScene extends CardGame{
 		carta_f.clear();
 		for (int i = 0; i < 4; i++) {
 			takeCard(card_deck.draw_card(), playerHand, true);
-			takeCard(card_deck.draw_card(), playerHand2, true);
+			takeCard(card_deck.draw_card(), playerHand2, false);
 
 		}
 		
-		return false;
+		return true;
 	}
 
 
