@@ -17,8 +17,7 @@ public class PokerSceneTest extends TestCase{
 	private CardDeck expected;
 	
 	@Before
-	protected void setUp() {
-		
+	protected void setUp() {		
 		myPoker = new PokerScene();
 		myAppMock = new MainMock(myPoker);
 		myPoker.card_deck = new CardDeck();
@@ -48,6 +47,7 @@ public class PokerSceneTest extends TestCase{
 				});
 			}
 		});
+		
 		thread.start();// Initialize the thread
 		try {
 			Thread.sleep(3000);

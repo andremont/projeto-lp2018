@@ -6,7 +6,9 @@ import java.util.Random;
 import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
 import ismt.application.engine.CardGame;
+import ismt.application.engine.Context;
 import ismt.application.engine.Player;
+import ismt.application.engine.Utils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -48,7 +50,8 @@ public class PokerScene extends CardGame {
 	private ObservableList<Node> turnCards;
 	private ObservableList<Node> riverCards;
 	private ObservableList<Node> burnCard;
-	Player man = new Player();
+
+	private Player man = new Player();
 
 	private HBox graveyard = new HBox(5);
 	private HBox player = new HBox(5);
@@ -75,6 +78,8 @@ public class PokerScene extends CardGame {
 	private String cash3;
 	private String cash4;
 	private String pocketCash;
+	private String playerName;
+	private String winner;
 
 	private Text moneyText = new Text();
 	private Text money2Text = new Text();
@@ -108,7 +113,13 @@ public class PokerScene extends CardGame {
 	}
 
 	private Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
+
+		Context context = Context.getInstance();
+		String name = context.getName();
+		man.getName();
 		playerHand = FXCollections.observableArrayList();
+
+		playerName = "My ";
 
 		playerHand = player.getChildren();
 		player2Hand = player2.getChildren();
@@ -183,8 +194,8 @@ public class PokerScene extends CardGame {
 		moneyBox.getChildren().addAll(moneyText);
 		btnActionsHBox.setAlignment(Pos.CENTER);
 		btnOptionsHBox.setAlignment(Pos.CENTER);
-		rightVBox.getChildren().addAll(btnOptionsHBox, moneyText, money2Text, money3Text, money4Text, pocketMoney,
-				btnActionsHBox, slide, slideValue);
+		rightVBox.getChildren().addAll(btnOptionsHBox, moneyText, money2Text, money3Text, 
+									money4Text, pocketMoney, btnActionsHBox, slide, slideValue);
 
 		// ADD BOTH STACKS TO ROOT LAYOUT
 
@@ -210,22 +221,18 @@ public class PokerScene extends CardGame {
 
 		btnCheck.setOnAction(event -> {
 			check();
-
 		});
 
 		btnCall.setOnAction(event -> {
 			call();
-
 		});
 
 		btnRaise.setOnAction(event -> {
 			raise();
-
 		});
 
 		btnFold.setOnAction(event -> {
 			fold();
-
 		});
 		buttonBack.setOnAction(buttonBackhandler);
 
@@ -286,6 +293,7 @@ public class PokerScene extends CardGame {
 					test.turn_card();
 				}
 			}
+			
 			btnCheck.setVisible(false);
 			btnCall.setVisible(false);
 			btnRaise.setVisible(false);
@@ -293,6 +301,7 @@ public class PokerScene extends CardGame {
 			slide.setVisible(false);
 
 			playable.set(false);
+			winner = playerName;
 			endGame();
 			break;
 		}
@@ -319,7 +328,6 @@ public class PokerScene extends CardGame {
 	}
 
 	private void call() {
-
 		if (dealer != 3) {
 			if (dealer == 4) {
 				myMoney = myMoney - small;
@@ -335,7 +343,6 @@ public class PokerScene extends CardGame {
 
 	private void check() {
 		move();
-
 	}
 
 	public boolean setDealer() {
@@ -397,7 +404,6 @@ public class PokerScene extends CardGame {
 			break;
 		}
 		return true;
-
 	}
 
 	public boolean setNewText() {
@@ -407,7 +413,7 @@ public class PokerScene extends CardGame {
 		cash4 = Integer.toString(money4);
 		pocketCash = Integer.toString(pocket);
 
-		moneyText.setText(" My money: " + cash + "€");
+		moneyText.setText(playerName + " money: " + cash + "€");
 		money2Text.setText("Player 2: " + cash2 + "€");
 		money3Text.setText("Player 3: " + cash3 + "€");
 		money4Text.setText("Player 4: " + cash4 + "€");
@@ -451,14 +457,12 @@ public class PokerScene extends CardGame {
 			slide.setDisable(true);
 		}
 		return true;
-
 	}
 
 	public boolean takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
 		if (up) {
 			card.turn_card();
 		}
-
 		cardHand.add(card);
 		return true;
 	}
@@ -466,18 +470,19 @@ public class PokerScene extends CardGame {
 	@Override
 	public void deal() {
 		card_deck = new CardDeck();
-
 	}
 
 	@Override
 	public void shuffle() {
 		card_deck.shuffle();
 		deal();
-
 	}
 
 	@Override
 	public boolean startNewGame() {
+
+		playerName = Context.getInstance().getName() + "'s";
+		this.man = Context.getInstance().getPlayer();
 
 		setNewText();
 		deal();
@@ -487,7 +492,7 @@ public class PokerScene extends CardGame {
 
 		card_deck.shuffle();
 
-		clearHands();		
+		clearHands();
 		setDealer();
 
 		for (int i = 0; i < 2; i++) {
@@ -534,14 +539,17 @@ public class PokerScene extends CardGame {
 		gameState = 1;
 
 		clearHands();
-		
-		slideValue.setText("YOU WON!!");
+
+		if (winner.equals(playerName)) {
+
+			slideValue.setText("YOU WON!!");
+
+			man.setPoints(man.getPoints() + 1);
+			Utils.SaveUser(man);
+		} else
+			slideValue.setText("YOU LOSE!");
+
 		slideValue.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
-
-		// TODO gravar nome dos players
-		// int x = player.getPoints() + 1;
-		// player.setPoints(x);
-
 		return true;
 	}
 
@@ -576,8 +584,8 @@ public class PokerScene extends CardGame {
 	public void simulateGame() {
 
 		Card test = (Card) player2Hand.get(1);
-		//Card card = new Card();
-		//card = (Card) test;
+		// Card card = new Card();
+		// card = (Card) test;
 		test.turn_card();
 	}
 }
