@@ -302,7 +302,20 @@ public class PeixinhoScene extends CardGame{
 		Card test = (Card) playerHand2.get(1);
 		test.turn_card();
 	}
-	
+        
+	    /**
+     * @return the txtpontuacao
+     */
+    public Label getTxtpontuacao() {
+        return txtpontuacao;
+    }
+
+    /**
+     * @param txtpontuacao the txtpontuacao to set
+     */
+    public void setTxtpontuacao(Label txtpontuacao) {
+        this.txtpontuacao = txtpontuacao;
+    }
 
 	
 }
