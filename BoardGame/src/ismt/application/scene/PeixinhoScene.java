@@ -190,7 +190,7 @@ public class PeixinhoScene extends CardGame{
 	public void janela(){
 		String a = "";
 		int cartaPedida =Integer.parseInt( 
-				JOptionPane.showInputDialog("Insira a nº da carta a pescar"));
+				JOptionPane.showInputDialog("Insira o nr. da carta a pescar"));
 		if(cartaPedida >= 1 && cartaPedida < 15){
 			
 			a = String.valueOf(cartaPedida);
@@ -205,7 +205,7 @@ public class PeixinhoScene extends CardGame{
 			}
 		
 		}else{
-			JOptionPane.showMessageDialog(null, "Não tenho a carta ");
+			JOptionPane.showMessageDialog(null, "Nao tenho a carta ");
 		}
 		
 	 }
