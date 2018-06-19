@@ -291,7 +291,8 @@ public class PeixinhoScene extends CardGame{
 		
 		playerHand.clear();
 		playerHand2.clear();
-		carta_f.clear();
+            final ObservableList<Node> carta_f1 = carta_f;
+		carta_f1.clear();
 		
 		return false;
 	}
