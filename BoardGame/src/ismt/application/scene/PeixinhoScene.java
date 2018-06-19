@@ -1,15 +1,12 @@
 package ismt.application.scene;
 
 import javafx.geometry.Insets;
-
 import javafx.geometry.Pos;
 import javax.swing.JOptionPane;
 import ismt.application.engine.Card;
 import ismt.application.engine.CardDeck;
 import ismt.application.engine.CardGame;
-import ismt.application.engine.Context;
 import ismt.application.engine.Player;
-import ismt.application.engine.Utils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,8 +41,6 @@ public class PeixinhoScene extends CardGame{
 	private HBox player = new HBox(5); //BAIXO
 	private HBox player2 = new HBox(5);
 	private VBox carta = new VBox(5);
-	private Player jogador_ = new Player();
-
 	private Button btnPlay;
 	private Button buttonBack;
 	private Button btnEnd;
@@ -84,7 +79,6 @@ public class PeixinhoScene extends CardGame{
 		btnPescar = new Button("Pescar");
 		btnPedir = new Button("Pedir");
 		txtpontuacao = new Label();
-		
 		playerHand = player.getChildren();
 		playerHand2 = player2.getChildren();
 		carta_f = carta.getChildren();
@@ -134,7 +128,7 @@ public class PeixinhoScene extends CardGame{
 		points.getChildren().addAll(point);
 		btnActionsHBox.setAlignment(Pos.CENTER);
 		btnOptionsHBox.setAlignment(Pos.CENTER);
-		rightVBox.getChildren().addAll(btnOptionsHBox, btnActionsHBox,text_point2);
+		rightVBox.getChildren().addAll(btnOptionsHBox, btnActionsHBox,text_point,text_point2);
 
 		// ADD BOTH STACKS TO ROOT LAYOUT
 
@@ -156,7 +150,7 @@ public class PeixinhoScene extends CardGame{
 			endGame();
 		});
 		btnPescar.setOnAction(event ->{
-			mover();
+			pescar();
 
 		});
 		btnPedir.setOnAction(event ->{
@@ -196,7 +190,7 @@ public class PeixinhoScene extends CardGame{
 	public void janela(){
 		String a = "";
 		int cartaPedida =Integer.parseInt( 
-				JOptionPane.showInputDialog("Insira a nº da carta a pescar"));
+				JOptionPane.showInputDialog("Insira o nr. da carta a pescar"));
 		if(cartaPedida >= 1 && cartaPedida < 15){
 			
 			a = String.valueOf(cartaPedida);
@@ -211,7 +205,7 @@ public class PeixinhoScene extends CardGame{
 			}
 		
 		}else{
-			JOptionPane.showMessageDialog(null, "Não tenho a carta ");
+			JOptionPane.showMessageDialog(null, "Nao tenho a carta ");
 		}
 		
 	 }
@@ -228,13 +222,16 @@ public class PeixinhoScene extends CardGame{
 		return temp;
 	}
 
-	public void mover(){
+	public void pescar(){
 		switch(jogo){
 		case 1: 
-			carta.setVisible(true);
 			jogo++;
 			break;
 		case 2:
+			carta.setVisible(true);
+			jogo++;
+			break;
+		case 3:
 			if (playerHand2.size() == 3) {
 				for (int i = 1; i < 3; i++) {
 					Card test = (Card) playerHand2.get(i);
@@ -248,31 +245,23 @@ public class PeixinhoScene extends CardGame{
 				}
 			}
 
-			pontos();
-	
-		}
-		takeCard(card_deck.draw_card(), playerHand, true); 
-	}
+		}	
+	      takeCard(card_deck.draw_card(), playerHand, true);
+
+		txtpontuacao.setText("GANHASTE !!");
+
+	}//nsdmf
 	
 	public boolean pontos(){
 		point_text = Integer.toString(pontosHand1);
 		point_text2 = Integer.toString(pontosHand2);
-		text_point2.setText("Pontos" + point_text2 +  " " );
-		if(point_text2.equals(text_point2)){
-			txtpontuacao.setText("GANHASTE");
-			jogador_.setPoints(jogador_.getPoints() + 150);
-			System.out.print("estou aqui");
-			Utils.SaveUser(jogador_);
-
-		}else
-			txtpontuacao.setText("PERDEU, TENTE NOVAMENTE");
-			return false;
+		text_point.setText("Pontos: " +point_text + " ");
+		text_point2.setText("Pontos: " +point_text2 + " ");
+		return true;
 	}
 	
 	@Override
 	public boolean startNewGame() {
-		point_text2 = Context.getInstance().getName() + "'s";
-		this.jogador_ = Context.getInstance().getPlayer();
 		deal();
 		pontos();
 		playable.set(true);
@@ -287,7 +276,7 @@ public class PeixinhoScene extends CardGame{
 			takeCard(card_deck.draw_card(), playerHand2, false);
 
 		}
-		pontos();
+		
 		return true;
 	}
 
@@ -300,23 +289,34 @@ public class PeixinhoScene extends CardGame{
 		player.setVisible(true);
 		carta.setVisible(false);
 		
-		Clear();
-		return true;
-	}
-	
-	private void Clear(){
 		playerHand.clear();
 		playerHand2.clear();
-		carta_f.clear();
+            final ObservableList<Node> carta_f1 = carta_f;
+		carta_f1.clear();
+		
+		return false;
 	}
+
 
 	@Override
 	public void simulateGame() {
 		Card test = (Card) playerHand2.get(1);
 		test.turn_card();
 	}
-	
+        
+	    /**
+     * @return the txtpontuacao
+     */
+    public Label getTxtpontuacao() {
+        return txtpontuacao;
+    }
+
+    /**
+     * @param txtpontuacao the txtpontuacao to set
+     */
+    public void setTxtpontuacao(Label txtpontuacao) {
+        this.txtpontuacao = txtpontuacao;
+    }
 
 	
 }
-
