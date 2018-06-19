@@ -150,7 +150,7 @@ public class PeixinhoScene extends CardGame{
 			endGame();
 		});
 		btnPescar.setOnAction(event ->{
-			mover();
+			pescar();
 
 		});
 		btnPedir.setOnAction(event ->{
@@ -222,7 +222,7 @@ public class PeixinhoScene extends CardGame{
 		return temp;
 	}
 
-	public void mover(){
+	public void pescar(){
 		switch(jogo){
 		case 1: 
 			jogo++;
