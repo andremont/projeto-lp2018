@@ -169,10 +169,11 @@ public class PeixinhoScene extends CardGame{
 
 	public boolean takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
 		if (up) {
-			card.turn_card();
-		}
-		cardHand.add(card);
+			cardHand.add(card.generateCardImage());
+			
+		}else {
 		
+		cardHand.add(card);}
 		return true;
 	}
 
@@ -192,8 +193,8 @@ public class PeixinhoScene extends CardGame{
 		int cartaPedida =Integer.parseInt( 
 				JOptionPane.showInputDialog("Insira o nr. da carta a pescar"));
 		if(cartaPedida >= 1 && cartaPedida < 15){
-			
 			a = String.valueOf(cartaPedida);
+			
 			Card temp = getCardInHand(a, playerHand2);
 
 			if(temp.getRank()!=0){
@@ -273,7 +274,7 @@ public class PeixinhoScene extends CardGame{
 		carta_f.clear();
 		for (int i = 0; i < 4; i++) {
 			takeCard(card_deck.draw_card(), playerHand, true);
-			takeCard(card_deck.draw_card(), playerHand2, false);
+			takeCard(card_deck.draw_card(), playerHand2, true);
 
 		}
 		
