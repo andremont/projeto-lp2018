@@ -460,10 +460,19 @@ public class PokerScene extends CardGame {
 	}
 
 	public boolean takeCard(Card card, ObservableList<Node> cardHand, boolean up) {
+		
+//		Função principal, mas a turn_card() não está a funcionar.		
+//		if (up) {
+//			card.turn_card();
+//		}
+//		cardHand.add(card);
+		
 		if (up) {
-			card.turn_card();
-		}
-		cardHand.add(card);
+			cardHand.add(card.generateCardImage());
+			
+		}else {
+		
+		cardHand.add(card);}
 		return true;
 	}
 
