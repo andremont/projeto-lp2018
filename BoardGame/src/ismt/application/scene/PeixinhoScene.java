@@ -55,9 +55,10 @@ public class PeixinhoScene extends CardGame{
 
 	private Text point = new Text();
 	private Text point2 = new Text();	
-	private int pontosHand1 = 500;
-	private int pontosHand2 = 500;
+	private int pontosHand1 = 0;
+	private int pontosHand2 = 0;
 	private int jogo = 1;
+        
 	public Scene buildPlayScene(Stage primaryStage, Scene sceneMain) {
 
 		EventHandler<ActionEvent> buttonBackhandler = new EventHandler<ActionEvent>() {
@@ -198,12 +199,13 @@ public class PeixinhoScene extends CardGame{
 			Card temp = getCardInHand(a, playerHand2);
 
 			if(temp.getRank()!=0){
+                            
 				JOptionPane.showMessageDialog(null,"Tenho a carta");
-				
-				//playerHand.add(temp);
 				takeCard(temp, playerHand, true);
-
+				//playerHand.add(temp);
 				playerHand2.remove(temp);
+                                addPontos();
+				
 
 			}
 		
@@ -248,20 +250,33 @@ public class PeixinhoScene extends CardGame{
 				}
 			}
 
-		}	
+		}
+              addPontos();	
 	      takeCard(card_deck.draw_card(), playerHand, true);
+              
 
 		txtpontuacao.setText("GANHASTE !!");
 
 	}//nsdmf
 	
 	public boolean pontos(){
-		point_text = Integer.toString(pontosHand1);
+                point_text = Integer.toString(pontosHand1);
 		point_text2 = Integer.toString(pontosHand2);
-		text_point.setText("Pontos: " +point_text + " ");
-		text_point2.setText("Pontos: " +point_text2 + " ");
+		text_point.setText("Meus Pontos: " +point_text + " ");
+		text_point2.setText("Pontos Adversário: " +point_text2 + " ");
 		return true;
-	}
+        }
+        
+        public void addPontos(){
+            
+            //pontosHand1
+            pontosHand1 += 20;
+            point_text = Integer.toString(pontosHand1);
+            text_point.setText("Meus Pontos: " +point_text + " ");
+            
+            
+            
+        }
 	
 	@Override
 	public boolean startNewGame() {
@@ -321,5 +336,6 @@ public class PeixinhoScene extends CardGame{
         this.txtpontuacao = txtpontuacao;
     }
 
+    
 	
 }
