@@ -43,13 +43,7 @@ public class PokerScene extends CardGame {
 	private Text message = new Text();
 
 	public ObservableList<Node> playerHand;
-	private ObservableList<Node> player2Hand;
-	private ObservableList<Node> player3Hand;
-	private ObservableList<Node> player4Hand;
-	private ObservableList<Node> floopCards;
-	private ObservableList<Node> turnCards;
-	private ObservableList<Node> riverCards;
-	private ObservableList<Node> burnCard;
+	private ObservableList<Node>  player2Hand, player3Hand,player4Hand, floopCards, turnCards, riverCards, burnCard;
 
 	private Player man = new Player();
 
@@ -73,13 +67,7 @@ public class PokerScene extends CardGame {
 	private Slider slide;
 	private Label slideValue;
 
-	private String cash;
-	private String cash2;
-	private String cash3;
-	private String cash4;
-	private String pocketCash;
-	private String playerName;
-	private String winner;
+	private String cash, cash2, cash3, cash4, pocketCash, playerName, winner;
 
 	private Text moneyText = new Text();
 	private Text money2Text = new Text();
@@ -87,14 +75,7 @@ public class PokerScene extends CardGame {
 	private Text money4Text = new Text();
 	private Text pocketMoney = new Text();
 
-	private Button btnPlay;
-	private Button buttonBack;
-	private Button btnEnd;
-
-	private Button btnCheck;
-	private Button btnCall;
-	private Button btnRaise;
-	private Button btnFold;
+	private Button btnPlay, buttonBack, btnEnd, btnCheck, btnCall, btnRaise, btnFold;
 
 	private int dealer = 0;
 	private int gameState = 1;
@@ -240,7 +221,7 @@ public class PokerScene extends CardGame {
 
 	}
 
-	private void move() {
+	public boolean move() {
 
 		switch (gameState) {
 		case 1:
@@ -263,7 +244,7 @@ public class PokerScene extends CardGame {
 			if (player2Hand.size() == 3) {
 				for (int i = 1; i < 3; i++) {
 					Card test = (Card) player2Hand.get(i);
-					test.turn_card();
+					test.turn_card(); //mostra as cartas dos adversários
 				}
 			} else {
 				for (int i = 0; i < 2; i++) {
@@ -305,29 +286,34 @@ public class PokerScene extends CardGame {
 			endGame();
 			break;
 		}
+		return true;
 
 	}
 
-	private void fold() {
+	public boolean fold() {
 		btnCall.setVisible(false);
 		btnRaise.setVisible(false);
 		player.setVisible(false);
 		btnFold.setVisible(false);
 		slide.setVisible(false);
 		move();
+		
+		return true;
 
 	}
 
-	private void raise() {
+	public boolean  raise() {
 		double y = slide.getValue();
 		int x = (int) y;
 		myMoney = myMoney - x;
 		pocket = pocket + x;
 		setNewText();
 		move();
+		return true;
+
 	}
 
-	private void call() {
+	public boolean  call() {
 		if (dealer != 3) {
 			if (dealer == 4) {
 				myMoney = myMoney - small;
@@ -339,10 +325,14 @@ public class PokerScene extends CardGame {
 		}
 		setNewText();
 		move();
+		return true;
+
 	}
 
-	private void check() {
+	public boolean  check() {
 		move();
+		return true;
+
 	}
 
 	public boolean setDealer() {
@@ -354,6 +344,7 @@ public class PokerScene extends CardGame {
 		ImageView viewSmall = new ImageView(smallImage);
 		ImageView viewBig = new ImageView(bigImage);
 
+		// atribui o dealer na primeira jogada e incrementa nas seguintes.
 		if (dealer == 0) {
 			Random random = new Random();
 			dealer = random.nextInt(4) + 1;
@@ -439,7 +430,8 @@ public class PokerScene extends CardGame {
 				break;
 			}
 
-			slide.valueProperty().addListener(new ChangeListener<Number>() {
+			
+			slide.valueProperty().addListener(new ChangeListener<Number>() { // vai buscar o valor do slide.
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 
 					int x = new_val.intValue();
@@ -504,22 +496,28 @@ public class PokerScene extends CardGame {
 		clearHands();
 		setDealer();
 
+		
+		//Dá as cartas aos jogadores
 		for (int i = 0; i < 2; i++) {
 			takeCard(card_deck.draw_card(), playerHand, true);
 			takeCard(card_deck.draw_card(), player2Hand, false);
 			takeCard(card_deck.draw_card(), player3Hand, false);
 			takeCard(card_deck.draw_card(), player4Hand, false);
 		}
-
+		
+		//Queima uma carta.
 		takeCard(card_deck.draw_card(), burnCard, false);
 
+			//Dá o flop
 		for (int i = 0; i < 3; i++) {
 			takeCard(card_deck.draw_card(), floopCards, true);
 		}
-		takeCard(card_deck.draw_card(), burnCard, false);
-		takeCard(card_deck.draw_card(), turnCards, true);
-		takeCard(card_deck.draw_card(), burnCard, false);
-		takeCard(card_deck.draw_card(), riverCards, true);
+		
+		takeCard(card_deck.draw_card(), burnCard, false);//queima uma carta
+		takeCard(card_deck.draw_card(), turnCards, true);//dá o turn
+		
+		takeCard(card_deck.draw_card(), burnCard, false);//queima uma carta
+		takeCard(card_deck.draw_card(), riverCards, true);// dá o river
 
 		System.out.println("myMoney: " + myMoney);
 		System.out.println("money2: " + money2);
@@ -562,7 +560,7 @@ public class PokerScene extends CardGame {
 		return true;
 	}
 
-	private void clearHands() {
+	public boolean clearHands() {
 		if (playerHand != null) {
 			playerHand.clear();
 		}
@@ -587,6 +585,8 @@ public class PokerScene extends CardGame {
 		if (riverCards != null) {
 			riverCards.clear();
 		}
+		
+		return true;
 	}
 
 	@Override

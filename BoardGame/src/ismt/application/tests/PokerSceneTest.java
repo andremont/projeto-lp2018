@@ -104,15 +104,56 @@ public class PokerSceneTest extends TestCase{
 		assertEquals(expected, result);
 	}
 	
+	@Test
+	public void move() {
+		boolean expected = true;
+		boolean result = myPoker.move();
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void fold() {
+		boolean expected = true;
+		boolean result = myPoker.fold();
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void raise() {
+		boolean expected = true;
+		boolean result = myPoker.raise();
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void call() {
+		boolean expected = true;
+		boolean result = myPoker.call();
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void clearHands() {
+		boolean expected = true;
+		boolean result = myPoker.clearHands();
+		assertEquals(expected, result);
+	}
+	
 	
 	public static junit.framework.Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTest(new PokerSceneTest("testDeal")); 
 		suite.addTest(new PokerSceneTest("testShuffle"));
-		//suite.addTest(new PokerSceneTest("testStartGame"));
+		suite.addTest(new PokerSceneTest("testStartGame"));
 		suite.addTest(new PokerSceneTest("testEndGame"));
 		suite.addTest(new PokerSceneTest("testTakeCard"));
 		suite.addTest(new PokerSceneTest("testSetNewText"));
+		suite.addTest(new PokerSceneTest("move"));
+		suite.addTest(new PokerSceneTest("fold"));
+		suite.addTest(new PokerSceneTest("raise"));
+		suite.addTest(new PokerSceneTest("call"));
+		suite.addTest(new PokerSceneTest("clearHands"));
+		
 		return suite;
 	}
 }
