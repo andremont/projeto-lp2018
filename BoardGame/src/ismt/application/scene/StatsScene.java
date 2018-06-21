@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ismt.application.engine.Card;
+import ismt.application.engine.CardGame;
 import ismt.application.engine.Player;
 import ismt.application.engine.PlayerStats;
 import ismt.application.engine.Utils;
@@ -29,7 +30,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 
-public class StatsScene {
+
+public class StatsScene extends CardGame {
+	
+	int playerVictories;
+	int playerDraws;
+	int playerLosses;
+	int playerMoney;
+	int playerPoints;
 
 	ArrayList<Player> listaPlayers;
 
@@ -46,7 +54,7 @@ public class StatsScene {
 		return tempScene;
 	}
 
-	private ObservableList<PlayerStats> getUserList() {
+	public ObservableList<PlayerStats> getUserList() {
 		
 		ObservableList<PlayerStats> list = FXCollections.observableArrayList();
 		try {
@@ -59,12 +67,12 @@ public class StatsScene {
 				Stats stats = Utils.GetUserRecords(playerName);
 				player.setStats(stats);
 
+				this.playerVictories = player.getStats().getVictories();
+				this.playerDraws = player.getStats().getDraws();
+				this.playerLosses = player.getStats().getLosses();
+				this.playerMoney = player.getMoney();
+				this.playerPoints = player.getPoints();
 				
-				int playerVictories = player.getStats().getVictories();
-				int playerDraws = player.getStats().getDraws();
-				int playerLosses = player.getStats().getLosses();
-				int playerMoney = player.getMoney();
-				int playerPoints = player.getPoints();
 				
 				PlayerStats playerStats = new PlayerStats(
 						playerName, playerVictories, playerDraws,
@@ -77,10 +85,10 @@ public class StatsScene {
 				
 				list.add(playerStats);
 				// debug print to console 
-				System.out.println("Player: "+ playerName +
-						" vitorias: "+ playerVictories + " empates: "+ playerDraws + 
-						" derrotas: "+ playerLosses + " money: " + playerMoney +
-						" pontuação: " + playerPoints);
+//				System.out.println("Player: "+ playerName +
+//						" vitorias: "+ playerVictories + " empates: "+ playerDraws + 
+//						" derrotas: "+ playerLosses + " money: " + playerMoney +
+//						" pontuação: " + playerPoints);
 			}
 
 		} catch (IOException e) {
@@ -93,7 +101,7 @@ public class StatsScene {
 
 	}
 
-	private Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
+	public Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
 
 
 		TableView<PlayerStats> tablePlayer = new TableView<PlayerStats>();
@@ -153,5 +161,34 @@ public class StatsScene {
 
 		return root;
 	}
+	
+	@Override
+	public void deal() {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void shuffle() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean startNewGame() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean endGame() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void simulateGame() {
+		// TODO Auto-generated method stub
+		
+	}
 }
