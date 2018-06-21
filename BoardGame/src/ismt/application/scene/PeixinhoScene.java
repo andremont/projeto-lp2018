@@ -200,9 +200,10 @@ public class PeixinhoScene extends CardGame{
 			if(temp.getRank()!=0){
 				JOptionPane.showMessageDialog(null,"Tenho a carta");
 				
-				playerHand.add(temp);
+				//playerHand.add(temp);
 				playerHand2.remove(temp);
-				
+				takeCard(temp, playerHand, true);
+
 			}
 		
 		}else{
@@ -274,7 +275,7 @@ public class PeixinhoScene extends CardGame{
 		carta_f.clear();
 		for (int i = 0; i < 4; i++) {
 			takeCard(card_deck.draw_card(), playerHand, true);
-			takeCard(card_deck.draw_card(), playerHand2, true);
+			takeCard(card_deck.draw_card(), playerHand2, false);
 
 		}
 		
