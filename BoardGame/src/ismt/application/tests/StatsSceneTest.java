@@ -1,36 +1,56 @@
 package ismt.application.tests;
 
+
+import ismt.application.engine.Utils;
+import ismt.application.engine.CardDeck;
+import ismt.application.engine.Player;
+import ismt.application.engine.PlayerStats;
+import ismt.application.engine.Stats;
+import ismt.application.scene.StatsScene;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ismt.application.engine.CardDeck;
-import ismt.application.scene.BlackJackScene;
+
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.stage.Stage;
+
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 public class StatsSceneTest extends TestCase {
 
 	private MainMock myAppMock;
-	private BlackJackScene myBlackJack;
-	private CardDeck expected;
-
+	private StatsScene mystats;
+	String playerName = "Xavier";
+	Player player = new Player();
+	PlayerStats playerStats = new PlayerStats(playerName, 100, 5, 5, 20000, 500);
 	@Before
 	protected void setUp() {
-		myBlackJack = new BlackJackScene();
-		myAppMock = new MainMock(myBlackJack);
-		myBlackJack.card_deck = new CardDeck();
-		expected = myBlackJack.card_deck;
+		mystats = new StatsScene();
+		myAppMock = new MainMock(mystats);
 		createAppMock();
+		
+		
+		
+		Stats stats = new Stats();
+		stats.setDraws(111);
+		stats.setLosses(102);
+		stats.setVictories(100);
+		
+		player.setName(playerName);
+		player.setPassword(playerName);
+		//player.setDeck(new CardDeck());
+		this.player.setStats(stats);
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		myBlackJack = null;
+		mystats = null;
 		myAppMock.stop();
-		expected = null;
+	
 	}
 
 	private void createAppMock() {
@@ -57,51 +77,35 @@ public class StatsSceneTest extends TestCase {
 		} // Time to use the app, without this the thread will be killed before
 	}
 	
-	public StatsSceneTest(String name) {
+	public StatsSceneTest(String name) { 
 		super(name);
 	}
 	
-	@Test
-	public void testDeal() {
-		CardDeck result = new CardDeck();
-		assertTrue(!expected.equals(result));
-	}
+    @Test
+	public void testeSetUser() {
 
-	@Test
-	public void testShuffle() {
-		myBlackJack.shuffle();
-		CardDeck result = myBlackJack.card_deck;
-		assertNotSame(expected, result);
-	}
-
-	@Test
-	public void testStartGame() {
-		boolean expected = true;
-		boolean result = myBlackJack.startNewGame();
+		boolean expected = true; // 
+		boolean result = Utils.SaveUser(this.player); // seria necessario criaçao de ficheiro como argumento de SaveUser no Utils
+	
 		assertEquals(expected, result);
 	}
-
-	@Test
-	public void testEndGame() {
-		boolean expected = true;
-		boolean result = myBlackJack.endGame();
+    
+    @Test
+    public void testeGetUserList() {
+    	
+    	boolean expected = true; 
+		boolean result = mystats.getUserList().add(playerStats);
+	
 		assertEquals(expected, result);
+    	
+    }
+
+    public static junit.framework.Test testSuite() {
+		TestSuite testSuite = new TestSuite();
+		testSuite.addTest(new StatsSceneTest("testeSetUser")); 
+		testSuite.addTest(new StatsSceneTest("testeGetUserList")); // problemas com rank do Utils ser Integer e não String 
+
+		return testSuite;
 	}
 
-	@Test
-	public void testTakeCard() {
-		boolean expected = true;
-		boolean result = myBlackJack.takeCard(1, myBlackJack.card_deck.draw_card(), myBlackJack.dealerHand, myBlackJack.pointsDealer);
-		assertEquals(expected, result);
-	}
-
-	public static junit.framework.Test suite() {
-		TestSuite suite = new TestSuite();
-		suite.addTest(new BlackJackSceneTest("testDeal")); 
-		suite.addTest(new BlackJackSceneTest("testShuffle"));
-		suite.addTest(new BlackJackSceneTest("testStartGame"));
-		suite.addTest(new BlackJackSceneTest("testEndGame"));
-		suite.addTest(new BlackJackSceneTest("testTakeCard"));
-		return suite;
-	}
 }
