@@ -32,7 +32,26 @@ public class PeixinhoSceneTest extends TestCase{
 		myAppMock.stop();
 		expected = null;
 	}
+	@Test
+	public void testJanela(){
+		PeixinhoScene result = new PeixinhoScene();
+		
+		assertTrue(!expected.equals(result));
+	}
+	
+	@Test
+	public void testPontos() {
+		boolean expected = true;
+		boolean result = myPeixinho.pontos();
+		assertEquals(expected, result);
+	}
 
+	@Test
+	public void testPescar(){
+		PeixinhoScene result = new PeixinhoScene();
+		assertTrue(!expected.equals(result));
+	}
+	
 	private void createAppMock() {
 		Thread thread = new Thread(new Runnable() {
 
@@ -102,6 +121,10 @@ public class PeixinhoSceneTest extends TestCase{
 		suite.addTest(new PeixinhoSceneTest("testStartGame"));
 		suite.addTest(new PeixinhoSceneTest("testEndGame"));
 		suite.addTest(new PeixinhoSceneTest("testTakeCard"));
+		suite.addTest(new PeixinhoSceneTest("testJanela"));
+		suite.addTest(new PeixinhoSceneTest("testPontos"));
+		suite.addTest(new PeixinhoSceneTest("testPescar"));
+
 		return suite;
 	}
 }

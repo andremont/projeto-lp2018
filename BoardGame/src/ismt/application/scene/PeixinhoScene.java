@@ -201,8 +201,9 @@ public class PeixinhoScene extends CardGame{
 				JOptionPane.showMessageDialog(null,"Tenho a carta");
 				
 				//playerHand.add(temp);
-				playerHand2.remove(temp);
 				takeCard(temp, playerHand, true);
+
+				playerHand2.remove(temp);
 
 			}
 		
