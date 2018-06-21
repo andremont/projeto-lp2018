@@ -54,7 +54,7 @@ public class PlayersScene {
 		}
 		
 		
-		//constução da tabale
+		//constuÃ§Ã£o da tabale
 		TableView<Player>tablePlayer = new TableView<Player>();
 		TableColumn nameCol = new TableColumn("Name");
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -95,7 +95,7 @@ public class PlayersScene {
 		//tempScene.getStylesheets().add("/BoardGame/resource/style.css");
 		
 		
-//-----------------Criação dos botoes-----------------------------------------------------------------------------------
+//-----------------Criacao dos botoes-----------------------------------------------------------------------------------
 		Button btnListaPlayers = new Button("Visualizar Jogadores");
 		btnListaPlayers.setTooltip(new Tooltip("Listar todos os resultados na tabela resumo dos jogadores."));
 		
@@ -103,7 +103,7 @@ public class PlayersScene {
 		btnOrdenarNamePlayers.setTooltip(new Tooltip("Ordenar por Nome."));
 		
 		Button btnPlayersPontosOrdenar = new Button("Ordenar por Pontos");
-		btnPlayersPontosOrdenar.setTooltip(new Tooltip("Ordenar jogadores com por pontuação."));
+		btnPlayersPontosOrdenar.setTooltip(new Tooltip("Ordenar jogadores com por pontuaÃ§Ã£o."));
 		
 		Button btnMoneyOrdenar = new Button("Ordenar por Dinheiro");
 		btnMoneyOrdenar.setTooltip(new Tooltip("Ordenar por Money"));
@@ -122,8 +122,7 @@ public class PlayersScene {
 		txtFindPlayers.setPromptText("Pesquisar...");
 		txtFindPlayers.setPrefColumnCount(10);
 		txtFindPlayers.getText();
-		txtFindPlayers.setTooltip(new Tooltip("Pesquisar jogadores por nome ou por pontuação."));
-		//Scene tempScene = new Scene(createContent(buttonBackhandler));
+		txtFindPlayers.setTooltip(new Tooltip("Pesquisar jogadores por nome ou por pontuaÃ§Ã£o."));
 		
 		TextField txtName = new TextField();
 		txtName.setPromptText("Name");
@@ -149,7 +148,6 @@ public class PlayersScene {
 					for (Player p : playersData)
 						if (p.getName().toLowerCase().contains(txtFindPlayers.getText()))
 							pesquisa.add(p);
-					// btnFindPlayers.setDisable(true);
 					ObservableList<Player> items = FXCollections.observableArrayList(pesquisa);
 					tablePlayer.setItems(items);
 					txtFindPlayers.requestFocus();
@@ -218,26 +216,6 @@ public class PlayersScene {
 			}
 		});
 
-//---------------------Tabela individual------------------------------------------------------------------------------------------------------------------------------------
-				
-		/*tablePlayer.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown() && event.getClickCount() == 1) {
-					txtName.setText("Name: " + tablePlayer.getSelectionModel().getSelectedItem().getName());
-					txtName.setTooltip(new Tooltip("Name: " + tablePlayer.getSelectionModel().getSelectedItem().getName()));
-					//txtRank.setText("Rank: " + tablePlayer.getSelectionModel().getSelectedItem().getRank());
-					//txtRank.setTooltip(new Tooltip("Rank: " + tablePlayer.getSelectionModel().getSelectedItem().getRank()));
-					//txtSuit.setText("Suit: " + tablePlayer.getSelectionModel().getSelectedItem().getSuit());
-				//	txtSuit.setTooltip(new Tooltip("Suit: " + tablePlayer.getSelectionModel().getSelectedItem().getSuit()));
-					txtPoints.setText("Points: " + tablePlayer.getSelectionModel().getSelectedItem().getPoints());
-					txtPoints.setTooltip(new Tooltip("Points: " + tablePlayer.getSelectionModel().getSelectedItem().getPoints()));
-					txtMoney.setText("Money: " + tablePlayer.getSelectionModel().getSelectedItem().getMoney());
-					txtMoney.setTooltip(new Tooltip("Money: " + tablePlayer.getSelectionModel().getSelectedItem().getMoney()));
-					tablePlayer.setItems(items);
-				}
-			}
-		});		*/
 		
 		
 		
@@ -253,4 +231,3 @@ public class PlayersScene {
 
 	
 }
-
