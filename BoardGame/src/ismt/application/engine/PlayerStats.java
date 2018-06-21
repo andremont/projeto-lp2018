@@ -7,8 +7,6 @@ public class PlayerStats extends Stats{
 	private int money;
 	private int points;
 
-//	Stats stats = new Stats();
-
 	public PlayerStats(String given_name, 
 			int given_victories, int given_draws, 
 			int given_losses, int given_money, int given_points) {
