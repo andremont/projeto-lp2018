@@ -1,0 +1,46 @@
+{
+    "Peixinho": {
+        "Regra 1":"Cada jogador recebe quatro cartas.",
+        "Regra 2":"Decide-se que jogador começa e ele tem de pedir a um dos adversários uma das cartas que lhe convenha ter (para formar o conjunto de cartas iguais, cada uma de seu naipe).",
+        "Regra 3":"Se o outro jogador tiver tem de lhe dar a carta pedida, caso não tenha o jogador que pediu vai buscar uma carta ao baralho. ",
+        "Regra 4":"Se calhar a carta que pediu joga outra vez (tira outra carta do baralho), caso contrário é o outro jogador a jogar. ",
+        "Regra 5":"Ao longo do jogo os jogadores vão consigo obter quatro cartas iguais. Quando isso acontecer dizem que fizeram peixinho, põem as quatro cartas de lado e voltam a jogar. ",
+        "Regra 6:":"No final do jogo quem tiver mais peixinhos ganha."
+    },
+    "Burro": {
+    	"Regra 1":"O objetivo do jogo é ficar sem cartas na mão. O último jogador que permanecer com alguma carta perde, e é o burro, conta-se o número de cartas que esse jogador ainda tem, é costume tirar-se uma carta chamada ano de perdão e o resultado são os anos de burro do jogador perdedor.",
+        "Regra 2":"Este jogo não tem número limite de jogadores.",
+        "Regra 3":"Cada jogador recebe três cartas",
+        "Regra 4":"O jogador à esquerda do distribuidor começa jogando na mesa a carta mais alta que tiver na mão, de qualquer naipe, por exemplo, um 8 de copas; o segundo jogador tem de jogar outra carta de copas no monte(é obrigado a assistir). Se tiver uma carta de copas, o jogo prossegue com o próximo jogador da mesma forma, se não, ele compra do bolo (baralho) até obter uma carta desse naipe.",
+   		"Regra 5":"Ganha o direito a iniciar a próxima rodada o jogador que colocar a carta mais alta na mesa."
+    },
+   "Poker Texas Hold'em": {
+   		"Regra 1":"O Texas Hold'em é o jogo de poker mais popular do mundo principalmente nos cassinos e na televisão.",
+    	"Regra 2":"O Texas Hold'em é um poker de 7 cartas, ou seja você receberá 2 cartas, que serão só suas e 5 cartas comunitárias que serão dispostas na mesa com a face para cima.",
+    	"Regra 3":"Cada jogador deverá formar a melhor combinação de 5 cartas com as 7 disponiveis.",
+    	"Dealer":"O dealer gira em sentido horário após cada mão, e é representado por uma ficha com um D assim todos os jogadores se revezam pagando os blinds.",
+    	"Blinds":"Os blinds são apostas obrigatórias que devem ser feitas antes da distribuição das cartas, eles são pré estipulados de acordo com cada sala, o Small e Big blinds são pagos pelos dois jogadores a esquerda do Dealer respectivamente.",
+    	"Rodadas":"O Texas Hold'em é jogado em 4 rodadas, em cada uma das rodadas os jogadores podem apostar ou correr, as rodadas são:",
+    	"Pré-Flop":"Cada jogador recebe suas duas cartas próprias com a face para baixo, após olhar estas cartas cada jogador tem o direito de apostar, apenas pagar a aposta mínima ou correr (ao correr você fica fora até uma nova entrega de cartas).",
+    	"Flop":"Três cartas comunitárias são viradas na mesa, e uma nova rodada de apostas começa, até todos terem apostado a mesma quantia ou corrido.",
+   		"Turn":"Mais uma carta comunitária é virada na mesa, e uma nova rodada de apostas começa, até todos terem apostado a mesma quantia ou corrido",
+   		"River":"Uma ultima carta comunitária é virada na mesa, e uma nova rodada de apostas começa, até todos terem apostado a mesma quantia ou corrido, ao final as cartas dos jogadores que ainda estão jogando são reveladas e quem fizer a melhor mão leva as apostas dos demais.",
+   		"Regra 4":"Uma rodada termina se nenhum jogador apostar ou quando todos os jogadores fizerem apostas equivalentes",
+   		"Regra 5":"O river termina com os jogadores restantes mostrando suas cartas para comparação.",
+   		"Apostas 1":"A aposta mínima não pode ser menor que o big blind.",
+   		"Apostas 2":"Em caso de empate o pote é distribuído entre os jogadores empatados.",
+   		"Apostas 3":"All-in significa apostar tudo, você pode apostar tudo a qualquer momento, ou caso você não tenha a aposta mínima você também pode apostar tudo, neste caso você só receberá o valor de seu all-in de cada outro jogador envolvido naquela mão.",
+   		"Valores das Mãos":"Em resumo, uma mão de poker consiste em cinco cartas. As mãos são classificadas em várias categorias, como flush, seqüências ou dois pares. O jogador com a melhor mão ganha o jogo.",
+   		"1. Royal Flush":"Royal flush é uma seqüência de 10 ao ás do mesmo naipe.",
+   		"2. Straight Flush":"Straight flush é uma seqüência de cinco cartas, todas do mesmo naipe.",
+   		"3. Quadra":"Chama-se de quadra quatro cartas iguais, independente do naipe.",
+   		"4. Full House":"Full House é uma mão formada por uma trinca e um par, independente do naipe.",
+    	"5. Flush":"Flush é um conjunto de cinco cartas, todas do mesmo naipe.",
+    	"6. Sequência (Straight)":"São cinco cartas de valor consecutivo. Qualquer sequência (Straight) possível vai sempre incluir um 5 ou um 10.",
+    	"7. Trinca":"É a mão que contém três cartas iguais.",
+    	"8. Dois Pares":"Dois pares é uma mão com dois pares de cartas, independente do naipe.",
+    	"9. Um Par":"Um par é uma mão contendo um par de cartas independente do naipe.",
+		"10. Carta mais alta":"A mão com a carta mais alta ganha."
+    }
+}
+	
