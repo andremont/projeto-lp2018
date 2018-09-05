@@ -139,7 +139,7 @@ public class RulesScene {
 	
 		return root;
 	}
-	
+		
 		JSONObject obj = JSONUtils.getJSONObjectFromFile("/obj.json");
 		String[] names = JSONObject.getNames(obj);
 		for(String string : names) {
