@@ -23,7 +23,7 @@ public class RulesScene {
 		// Build individual screens
 		
 		buildRulesScene(primaryStage);
-
+	}
 	public Scene buildPlayScene(Stage primaryStage, Scene sceneMain) {
 
 		EventHandler<ActionEvent> buttonBackhandler = new EventHandler<ActionEvent>() {
@@ -109,13 +109,14 @@ public class RulesScene {
 						else
 							primaryStage.setScene(sceneMain);
 					}
+				
 				};
-
-		};
+			
+		}
 		Scene tempScene = new Scene(createContent(buttonBackhandler));
 
-	
-
+		
+		
 	
 	private Parent createContent(EventHandler<ActionEvent> buttonBackhandler) {
 		
@@ -171,3 +172,4 @@ public class RulesScene {
 	}
 
 
+}
