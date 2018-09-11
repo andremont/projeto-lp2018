@@ -169,7 +169,7 @@ public class RulesScene {
 		boolean bool = obj.getBoolean("Boolean");
 		System.out.println(bool);
 		
-		}}
+		}
 
 	
 }
